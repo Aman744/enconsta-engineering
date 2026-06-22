@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Tags -->
+  <title>Enconsta Consulting | Engineering Strength. Constructing Excellence.</title>
+  <meta name="description" content="Enconsta Consulting Pvt Ltd is a premier EPC partner offering Multidisciplinary Engineering, Project Management, Commissioning, and Manpower Consulting services for Refineries, Petrochemicals, Solar, Wind, and Power infrastructure.">
+  <meta name="keywords" content="EPC Consulting, Process Engineering, Piping Stress Analysis, Refinery Commissioning, Technical Safety, Solar Wind Engineering, Offshore Platform Design">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="bg-dark text-light typography-outfit">
+  <!-- Fixed WebGL Background -->
+  <canvas id="webgl-canvas" class="webgl-canvas"></canvas>
+
+  <!-- Floating Drifting Blueprint Layer -->
+  <div id="blueprint-overlay" class="blueprint-overlay"></div>
+
+  <!-- 00 Boot Loader Overlay -->
+  <div id="boot-loader" class="boot-loader">
+    <div class="boot-content">
+      <div class="boot-logo">// ENCONSTA SYSTEMS</div>
+      <div class="boot-progress-bar">
+        <div id="boot-progress" class="boot-progress"></div>
+      </div>
+      <div class="boot-console">
+        <div class="console-line text-cyan">SYSTEM INITIALIZING...</div>
+        <div class="console-line opacity-50" id="console-step-1">&gt; LOADING PROCESS MODELS...</div>
+        <div class="console-line opacity-50" id="console-step-2">&gt; LOADING PIPELINE CORRIDORS...</div>
+        <div class="console-line opacity-50" id="console-step-3">&gt; LOADING OPERATIONS GLOBE...</div>
+        <div class="console-line text-green opacity-0" id="console-ready">SYSTEM READY. BOOT COMPLETED.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Sticky Navigation -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="#" class="logo" id="nav-logo">
+        <span class="logo-symbol">//</span> Enconsta
+      </a>
+      <nav class="nav" aria-label="Main Navigation">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#capabilities" class="nav-link">Capabilities</a>
+        <a href="#credentials" class="nav-link">Credentials</a>
+        <a href="#team" class="nav-link">Team</a>
+        <a href="#contact" class="btn-expert">Talk to Experts</a>
+      </nav>
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 01 Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <span class="ticker-label">EPC & ENGINEERING CONSULTING</span>
+        <h1 class="hero-title">
+          Engineering Strength.<br>
+          <span class="text-gradient">Constructing Excellence.</span>
+        </h1>
+        
+        <!-- Engineering Ticker -->
+        <div class="ticker-wrapper">
+          <span class="ticker-prefix">SPECIALIZED SECTORS: </span>
+          <span id="ticker-text" class="ticker-text">Oil & Gas</span>
+        </div>
+
+        <p class="hero-subhead">
+          Multidisciplinary Engineering, Procurement, Construction, Operations & Maintenance, and Manpower solutions serving global refinery, petrochemical, wind, solar, and industrial infrastructure.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#services" class="btn btn-primary">Explore Capabilities</a>
+          <a href="#contact" class="btn btn-outline">Talk to Experts</a>
+        </div>
+      </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <span class="scroll-text">SCROLL TO DISCOVER</span>
+      <div class="scroll-pipeline">
+        <div class="pipeline-particle"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Engineering Universe Section -->
+  <section id="universe" class="universe-section">
+    <div class="container text-center">
+      <span class="section-pre">02 / VISUALIZING INFRASTRUCTURE</span>
+      <h2 class="section-title">The Engineering Universe</h2>
+      <p class="section-desc">
+        Watch blueprint drawings transform into real industrial facilities. Our precision CAD processes convert complex engineering requirements into physical, operations-ready assets.
+      </p>
+      <!-- Container for dynamic text/blueprint overlays if needed -->
+      <div class="universe-canvas-trigger"></div>
+    </div>
+  </section>
+
+  <!-- 03 About Enconsta Section -->
+  <section id="about" class="about-section bg-light text-dark">
+    <div class="container grid-2">
+      <div class="about-visual">
+        <div class="visual-blueprint-box">
+          <div class="bp-grid-pattern"></div>
+          <div class="bp-model-outline"></div>
+        </div>
+      </div>
+      <div class="about-content">
+        <span class="section-pre text-blue">03 / WHO WE ARE</span>
+        <h2 class="section-title text-navy">Seasoned EPC Industry Experts</h2>
+        <p class="paragraph-large">
+          Enconsta is a dynamic engineering solutions provider established by a team of seasoned industry professionals.
+        </p>
+        <p>
+          With a strong foundation in multidisciplinary engineering and design, the company brings together decades of versatile experience across onshore and offshore projects, including refineries, petrochemicals, power plants, and other industrial infrastructure.
+        </p>
+        <p>
+          Enconsta operates with a global outlook, leveraging its extensive resource pool and strategic partnerships to deliver high-quality, end-to-end engineering and commissioning solutions.
+        </p>
+        
+        <div class="vision-mission-grid">
+          <div class="vm-card">
+            <h4>Our Vision</h4>
+            <p>To become a globally respected provider of comprehensive engineering services, delivering innovative design and detailing solutions to the Process and Energy industries.</p>
+          </div>
+          <div class="vm-card">
+            <h4>Our Mission</h4>
+            <p>To deliver high-quality engineering services tailored to meet client needs, integrating intelligent design, creative problem-solving, and a commitment to performance excellence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Why Enconsta (Counters) Section -->
+  <section id="why" class="why-section bg-light text-dark">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-pre text-blue">04 / CORE METRICS</span>
+        <h2 class="section-title text-navy">Why Partners Trust Enconsta</h2>
+        <p class="section-desc text-muted">
+          Our operational metrics are the foundation of our engineering integrity and regional reach.
+        </p>
+      </div>
+
+      <div class="counters-grid">
+        <div class="counter-card" id="counter-resources">
+          <div class="counter-number" data-target="600">0</div>
+          <div class="counter-plus">+</div>
+          <div class="counter-label">Engineering Resources</div>
+        </div>
+        <div class="counter-card" id="counter-experience">
+          <div class="counter-number" data-target="40">0</div>
+          <div class="counter-suffix">Yrs</div>
+          <div class="counter-label">Key Personnel Experience</div>
+        </div>
+        <div class="counter-card" id="counter-offices">
+          <div class="counter-number" data-target="4">0</div>
+          <div class="counter-label">Global Offices</div>
+        </div>
+        <div class="counter-card" id="counter-fabrication">
+          <div class="counter-number" data-target="2">0</div>
+          <div class="counter-label">Fabrication Facilities</div>
+        </div>
+        <div class="counter-card" id="counter-delivery">
+          <div class="counter-number" data-target="100">0</div>
+          <div class="counter-suffix">%</div>
+          <div class="counter-label">Multidisciplinary Delivery</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Services Section -->
+  <section id="services" class="services-section bg-white text-dark">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-pre text-blue">05 / SERVICES VERTICALS</span>
+        <h2 class="section-title text-navy">End-to-End Solutions</h2>
+        <p class="section-desc text-muted">
+          Comprehensive multidisciplinary services supporting energy and infrastructure asset lifecycles.
+        </p>
+      </div>
+
+      <div class="services-grid" id="services-target">
+        <!-- Rendered dynamically by Services content -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Capabilities (Horizontal WebGL Journey) Section -->
+  <div id="capabilities-pin" class="capabilities-pin-wrapper">
+    <section id="capabilities" class="capabilities-section">
+      <div class="horizontal-scroll-container">
+        
+        <!-- Panel 1: Engineering -->
+        <div class="panel capability-panel" data-cap="engineering">
+          <div class="panel-inner container grid-2">
+            <div class="panel-content">
+              <span class="panel-num">06A / CAPABILITIES</span>
+              <h3 class="panel-title">Process & Mechanical Design</h3>
+              <p class="panel-desc">
+                High-fidelity simulation, thermal design, and technical safety audits for heavy process industries.
+              </p>
+              <div class="panel-details">
+                <div class="cap-group">
+                  <h5>Process Modeling</h5>
+                  <p>Process simulation, P&ID drafting, steady-state hydraulics, and terminal designs.</p>
+                </div>
+                <div class="cap-group">
+                  <h5>Mechanical Validation</h5>
+                  <p>Static calculations (PV Elite), rotating machinery sizing, and FAT witness support.</p>
+                </div>
+              </div>
+            </div>
+            <div class="panel-visual">
+              <div class="technical-readout" id="readout-process">
+                <span class="readout-line">// PROCESS SIMULATION ENGINE</span>
+                <span class="readout-line">STATUS: ACTIVE</span>
+                <span class="readout-line">PRESSURE: 42.5 BAR</span>
+                <span class="readout-line">FLOW RATE: 105 MMSCFD</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Infrastructure -->
+        <div class="panel capability-panel" data-cap="infrastructure">
+          <div class="panel-inner container grid-2">
+            <div class="panel-content">
+              <span class="panel-num">06B / CAPABILITIES</span>
+              <h3 class="panel-title">Civil & Piping Systems</h3>
+              <p class="panel-desc">
+                Detailed structural calculations, dynamic foundation design, and 3D piping routing.
+              </p>
+              <div class="panel-details">
+                <div class="cap-group">
+                  <h5>Civil & Structural</h5>
+                  <p>Pipe racks, dynamic steel supports, composite layouts, and STAAD-Pro validations.</p>
+                </div>
+                <div class="cap-group">
+                  <h5>Piping Engineering</h5>
+                  <p>3D modeling (PDMS, E3D), Caesar II stress checks, and isometric extractions.</p>
+                </div>
+              </div>
+            </div>
+            <div class="panel-visual">
+              <div class="technical-readout" id="readout-piping">
+                <span class="readout-line">// STRESS TESTING ENGINE</span>
+                <span class="readout-line">CAESAR II LOAD CASE 4</span>
+                <span class="readout-line">MAX EXPANSION: 12.3mm</span>
+                <span class="readout-line">BENDING RATIO: 0.72 [PASS]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Systems -->
+        <div class="panel capability-panel" data-cap="systems">
+          <div class="panel-inner container grid-2">
+            <div class="panel-content">
+              <span class="panel-num">06C / CAPABILITIES</span>
+              <h3 class="panel-title">Electrical & Instrumentation</h3>
+              <p class="panel-desc">
+                Sizing grid lines, designing controls architectures, and telecom setups.
+              </p>
+              <div class="panel-details">
+                <div class="cap-group">
+                  <h5>Electrical Grid Sizing</h5>
+                  <p>ETAP load analysis, cable sizing, earthing grids, and hazardous classifications.</p>
+                </div>
+                <div class="cap-group">
+                  <h5>Instrumentation & F&G</h5>
+                  <p>DCS/PLC architectures, SCADA automation loops, and fire & gas telemetry.</p>
+                </div>
+              </div>
+            </div>
+            <div class="panel-visual">
+              <div class="technical-readout" id="readout-systems">
+                <span class="readout-line">// CONTROL LOOP DIAGRAM</span>
+                <span class="readout-line">SPI INTOOLS v12.4</span>
+                <span class="readout-line">SIGNAL: 4-20mA HART</span>
+                <span class="readout-line">LOOP STATUS: LOCK STABLE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 4: Digital -->
+        <div class="panel capability-panel" data-cap="digital">
+          <div class="panel-inner container grid-2">
+            <div class="panel-content">
+              <span class="panel-num">06D / CAPABILITIES</span>
+              <h3 class="panel-title">AI & Software Platforms</h3>
+              <p class="panel-desc">
+                AI-driven document checking, smart design audits, and reliability modeling.
+              </p>
+              <div class="panel-details">
+                <div class="cap-group">
+                  <h5>AI Design Command</h5>
+                  <p>Automated P&ID checks, doc generation, and safety criticality analytics.</p>
+                </div>
+                <div class="cap-group">
+                  <h5>Engineering Software Stack</h5>
+                  <p>Unisim, Olga, Pipenet, PDS, E3D, Caesar II, and PV Elite integrations.</p>
+                </div>
+              </div>
+            </div>
+            <div class="panel-visual">
+              <div class="technical-readout" id="readout-digital">
+                <span class="readout-line">// AI ENGINE SCANNING...</span>
+                <span class="readout-line">MODEL: ENCONSTA_NET_v2</span>
+                <span class="readout-line">ANOMALY INDEX: 0.002%</span>
+                <span class="readout-line">OPTIMIZATION PROFILE: ENGAGE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- 07 AI Engineering Command Center Section -->
+  <section id="ai-engineering" class="ai-section bg-dark">
+    <div class="container grid-2">
+      <div class="ai-content">
+        <span class="section-pre text-cyan">07 / DIGITAL TWIN INTELLIGENCE</span>
+        <h2 class="section-title text-white">AI Engineering Command Center</h2>
+        <p class="paragraph-large">
+          Integrating neural computing platforms into legacy engineering pipelines to automate checking and secure operations.
+        </p>
+        
+        <div class="twin-steps">
+          <div class="twin-step active" id="twin-step-1">
+            <div class="step-num">01</div>
+            <div class="step-info">
+              <h4>Plant Model Reconstruction</h4>
+              <p>Procedural structures are mapped with sensor fields to create live digital twins.</p>
+            </div>
+          </div>
+          <div class="twin-step" id="twin-step-2">
+            <div class="step-num">02</div>
+            <div class="step-info">
+              <h4>AI Asset Analysis</h4>
+              <p>Algorithms parse drawings and configurations to check compliance limits.</p>
+            </div>
+          </div>
+          <div class="twin-step" id="twin-step-3">
+            <div class="step-num">03</div>
+            <div class="step-info">
+              <h4>Risk & Integrity Detection</h4>
+              <p>Predictive loops analyze stresses (RBI API 580) and flags corrosion risks.</p>
+            </div>
+          </div>
+          <div class="twin-step" id="twin-step-4">
+            <div class="step-num">04</div>
+            <div class="step-info">
+              <h4>Operational Optimization</h4>
+              <p>CMMS asset registers dynamically adjust cycles to extend equipment life.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-visual">
+        <div class="command-dashboard">
+          <div class="dashboard-header">
+            <span class="status-indicator"></span> LIVE SIMULATION PIPELINE
+          </div>
+          <div class="dashboard-screen">
+            <div class="screen-twin-visual" id="twin-simulation-box">
+              <!-- Animated Digital Twin Canvas/Graph Overlay -->
+            </div>
+            <div class="screen-panels-grid">
+              <div class="floating-panel">
+                <h6>P&ID Auto Review</h6>
+                <div class="progress-mini"><div class="pm-bar width-85"></div></div>
+                <span>99.2% Accuracy</span>
+              </div>
+              <div class="floating-panel">
+                <h6>Asset Integrity</h6>
+                <div class="progress-mini"><div class="pm-bar width-70"></div></div>
+                <span>RAM Study Loaded</span>
+              </div>
+              <div class="floating-panel">
+                <h6>Predictive Maintenance</h6>
+                <div class="progress-mini"><div class="pm-bar width-90"></div></div>
+                <span>RCM Loop Locked</span>
+              </div>
+              <div class="floating-panel">
+                <h6>Document Gen</h6>
+                <div class="progress-mini"><div class="pm-bar width-95"></div></div>
+                <span>100% ISO Compliant</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 Renewable Energy Section -->
+  <section id="renewables-section" class="renewables-section text-center">
+    <div class="container">
+      <span class="section-pre text-cyan">08 / SUSTAINABLE INFRASTRUCTURE</span>
+      <h2 class="section-title">Decarbonizing Energy</h2>
+      <p class="section-desc">
+        Guiding process plants and grids through the green transition. Sizing structural grids for offshore wind farms, solar fields, and battery storage centers.
+      </p>
+      <div class="renewables-trigger"></div>
+    </div>
+  </section>
+
+  <!-- 09 Global Operations Map Section -->
+  <section id="global-map" class="map-section bg-dark text-center">
+    <div class="container">
+      <span class="section-pre text-cyan">09 / GLOBAL NETWORK</span>
+      <h2 class="section-title">International Operations</h2>
+      <p class="section-desc">
+        With operations centers, fabrication units, and engineering offices in Dubai, Chennai, Hyderabad, and Bengaluru, we execute projects across the Middle East, Africa, and Europe.
+      </p>
+      
+      <div class="offices-info-cards" id="offices-target">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 Credentials & Facilities Section -->
+  <section id="credentials" class="credentials-section bg-light text-dark">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-pre text-blue">10 / TRUST SIGNALS</span>
+        <h2 class="section-title text-navy">Facilities Covered & Project History</h2>
+        <p class="section-desc text-muted">
+          Our track record encompasses large-scale refineries, gas plants, jetties, wind assets, and petrochemical installations.
+        </p>
+      </div>
+
+      <div class="facilities-grid" id="facilities-target">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="divider-line"></div>
+
+      <div class="projects-showcase">
+        <h3 class="showcase-title text-navy text-center">Representative Executed Projects</h3>
+        <div class="projects-list" id="projects-target">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 Leadership Team Section -->
+  <section id="team" class="team-section bg-white text-dark">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-pre text-blue">11 / EXPERT DIRECTORY</span>
+        <h2 class="section-title text-navy">Leadership Team</h2>
+        <p class="section-desc text-muted">
+          Our leadership team is composed of seasoned EPC directors and discipline experts with 20-40 years of global field experience.
+        </p>
+      </div>
+
+      <div class="leadership-hierarchy" id="executives-target">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 Industry Ecosystem Section -->
+  <section id="ecosystem" class="ecosystem-section bg-light text-dark">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-pre text-blue">12 / INDUSTRIAL ECOSYSTEM</span>
+        <h2 class="section-title text-navy">Integrated Industry Network</h2>
+        <p class="section-desc text-muted">
+          Enconsta serves as the central integration layer connecting all critical engineering sectors.
+        </p>
+      </div>
+
+      <div class="ecosystem-interactive-wrapper">
+        <div class="ecosystem-network-map" id="ecosystem-network-map">
+          <!-- Animated Nodes of Ecosystem (Refinery, Petrochemical, LNG, Solar, Wind, Power, Pipeline) connected through Enconsta -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 Oil → Energy Transition Section -->
+  <section id="energy-transition" class="transition-section text-center">
+    <div class="container">
+      <span class="section-pre text-cyan">13 / ENERGY TRANSITION</span>
+      <h2 class="section-title">The Flow of Innovation</h2>
+      <p class="section-desc">
+        Watch metallic energy waves morph from traditional oil hydrocarbon layers into clean, sustainable currents. This visual transition represents our commitment to modern energy diversification.
+      </p>
+      <div class="transition-canvas-trigger"></div>
+    </div>
+  </section>
+
+  <!-- 14 Contact Section -->
+  <section id="contact" class="contact-section bg-white text-dark">
+    <div class="container grid-2">
+      <div class="contact-info">
+        <span class="section-pre text-blue">14 / CONNECT WITH US</span>
+        <h2 class="section-title text-navy">Let's Build the Future Together</h2>
+        <p class="paragraph-large">
+          Ready to partner on detailed engineering, commission auditing, or procurement expediting? Consult with our subject experts today.
+        </p>
+        
+        <div class="cta-actions-group">
+          <div class="cta-action-card">
+            <h5>Request Engineering Support</h5>
+            <p>Direct technical pipeline assistance for project managers.</p>
+            <button class="btn btn-primary btn-sm btn-cta-track" data-cta="support">Inquire Technical Support</button>
+          </div>
+          <div class="cta-action-card">
+            <h5>Schedule Consultation</h5>
+            <p>Set up an interactive engineering scoping session.</p>
+            <button class="btn btn-outline btn-sm btn-cta-track" data-cta="consultation">Request Scoping Call</button>
+          </div>
+          <div class="cta-action-card">
+            <h5>Download Company Profile</h5>
+            <p>Access our complete references, credentials, and capabilities document.</p>
+            <a href="/public/team/raghavan-cv.pdf" class="btn btn-outline btn-sm btn-cta-track" data-cta="download" download>Download PDF Brochure</a>
+          </div>
+        </div>
+
+        <div class="contact-methods">
+          <div class="method-item">
+            <span class="method-icon">&#9993;</span>
+            <div class="method-details">
+              <strong>General Inquiries</strong>
+              <a href="mailto:info@enconsta.com">info@enconsta.com</a>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-icon">&#9743;</span>
+            <div class="method-details">
+              <strong>Corporate Hub (India)</strong>
+              <a href="tel:+914498765432">+91 44 9876 5432</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrapper">
+        <h3 class="form-title text-navy">Engineering Scoping Request</h3>
+        <p class="form-subtitle">Submit details regarding your process requirements or upcoming tenders.</p>
+        
+        <form id="engineering-contact-form" class="engineering-form" novalidate>
+          <!-- Anti-spam Honeypot -->
+          <div style="display:none;">
+            <label for="company_website_url_check">Leave empty</label>
+            <input type="text" name="company_website_url_check" id="company_website_url_check" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form-row grid-2">
+            <div class="form-group">
+              <label for="contact-name">Full Name *</label>
+              <input type="text" id="contact-name" name="name" required placeholder="Dr. John Doe">
+              <span class="error-msg" id="err-name">Name is required.</span>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Corporate Email *</label>
+              <input type="email" id="contact-email" name="email" required placeholder="john.doe@company.com">
+              <span class="error-msg" id="err-email">Valid corporate email is required.</span>
+            </div>
+          </div>
+
+          <div class="form-row grid-2">
+            <div class="form-group">
+              <label for="contact-company">Company *</label>
+              <input type="text" id="contact-company" name="company" required placeholder="Chevron Corporation">
+              <span class="error-msg" id="err-company">Company is required.</span>
+            </div>
+            <div class="form-group">
+              <label for="contact-sector">Engineering Sector *</label>
+              <select id="contact-sector" name="sector" required>
+                <option value="" disabled selected>Select Sector</option>
+                <option value="oil-gas">Oil & Gas (Upstream/Downstream)</option>
+                <option value="refinery">Petrochemical & Refinery</option>
+                <option value="wind">Wind Energy</option>
+                <option value="solar">Solar Energy</option>
+                <option value="power-plant">Power Generation</option>
+                <option value="infrastructure">Industrial Infrastructure</option>
+              </select>
+              <span class="error-msg" id="err-sector">Sector selection is required.</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-service">Required Engineering Vertical *</label>
+            <select id="contact-service" name="service" required>
+              <option value="" disabled selected>Select Vertical</option>
+              <option value="engineering">Detailed Design & Engineering</option>
+              <option value="supply-chain">SCM & Fabrication Logistics</option>
+              <option value="construction">Site Supervision & Erection</option>
+              <option value="completions">Commissioning & CMMS Studies</option>
+              <option value="project-management">Project Control (PMC)</option>
+              <option value="manpower">Manpower Consulting</option>
+            </select>
+            <span class="error-msg" id="err-service">Vertical selection is required.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message">Project Specifications / Comments *</label>
+            <textarea id="contact-message" name="message" rows="4" required placeholder="Detail parameters, estimated timelines, or piping coordinates..."></textarea>
+            <span class="error-msg" id="err-message">Message is required.</span>
+          </div>
+
+          <!-- Rate limit / general status message -->
+          <div id="form-status" class="form-status"></div>
+
+          <button type="submit" class="btn btn-primary btn-block">Submit Scoping Request</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Semantic Hidden Headers for SEO Crawler Integrity -->
+  <div style="display:none;">
+    <h1>Engineering Strength. Constructing Excellence.</h1>
+    <h2>Engineering Services</h2>
+    <h2>Construction Services</h2>
+    <h2>Project Management</h2>
+    <h2>Piping & Pipeline Engineering</h2>
+    <h2>Oil & Gas Engineering</h2>
+  </div>
+
+  <footer class="footer-simple bg-dark text-light border-top">
+    <div class="container grid-3 footer-grid">
+      <div class="footer-info-col">
+        <h3>Enconsta</h3>
+        <p class="opacity-70">Providing high-precision engineering design, detailing, and commissioning solutions globally.</p>
+      </div>
+      <div class="footer-links-col">
+        <h4>Navigation</h4>
+        <a href="#about">About Us</a>
+        <a href="#services">Our Services</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="/team/">Leadership Team</a>
+        <a href="#contact">Inquire Support</a>
+      </div>
+      <div class="footer-address-col">
+        <h4>Global Head Office</h4>
+        <p class="opacity-70">Sheikh Zayed Road, Business Bay, Dubai, UAE</p>
+        <p class="opacity-70">Email: info@enconsta.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom text-center">
+      <p>&copy; 2026 Enconsta Consulting Pvt. Ltd. GSTN: 36AAICE4997P1ZM. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

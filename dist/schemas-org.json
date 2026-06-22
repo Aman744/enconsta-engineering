@@ -1,0 +1,155 @@
+{
+  "organization": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Enconsta Consulting Pvt Ltd",
+    "url": "https://enconsta.com",
+    "logo": "https://enconsta.com/logo.png",
+    "description": "Multidisciplinary Engineering, Construction, Project Management, Operations & Maintenance Solutions for Oil & Gas, Power, and Industrial Infrastructure.",
+    "founder": "Seasoned Industry Professionals",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Chennai",
+      "addressRegion": "Tamil Nadu",
+      "addressCountry": "India"
+    }
+  },
+  "offices": [
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Enconsta Consulting - Dubai Office",
+      "description": "Middle East & International Operations",
+      "telephone": "+971 4 123 4567",
+      "email": "dubai@enconsta.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Sheikh Zayed Road, Business Bay, Dubai, UAE",
+        "addressCountry": "UAE"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Enconsta Consulting - Chennai Center",
+      "description": "Engineering Center & Fabrication Units",
+      "telephone": "+91 44 9876 5432",
+      "email": "chennai@enconsta.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "OMR Road, Sholinganallur, Chennai, Tamil Nadu, India",
+        "addressCountry": "India"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Enconsta Consulting - Hyderabad Center",
+      "description": "Engineering Center & Skid Assembly Yard",
+      "telephone": "+91 40 4567 8901",
+      "email": "hyderabad@enconsta.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "HITECH City, Madhapur, Hyderabad, Telangana, India",
+        "addressCountry": "India"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Enconsta Consulting - Bengaluru Center",
+      "description": "Detailed Engineering & Design Hub",
+      "telephone": "+91 80 5432 1098",
+      "email": "bengaluru@enconsta.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Whitefield Road, Whitefield, Bengaluru, Karnataka, India",
+        "addressCountry": "India"
+      }
+    }
+  ],
+  "services": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Engineering",
+      "provider": {
+        "@type": "Organization",
+        "name": "Enconsta Consulting Pvt Ltd"
+      },
+      "description": "Multidisciplinary Design & Detailing Solutions"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Supply Chain Management",
+      "provider": {
+        "@type": "Organization",
+        "name": "Enconsta Consulting Pvt Ltd"
+      },
+      "description": "Global Procurement, Logistics & Expediting"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Construction",
+      "provider": {
+        "@type": "Organization",
+        "name": "Enconsta Consulting Pvt Ltd"
+      },
+      "description": "Heavy Industrial erection & Supervision"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Completions",
+      "provider": {
+        "@type": "Organization",
+        "name": "Enconsta Consulting Pvt Ltd"
+      },
+      "description": "Commissioning & Asset Management Alignment"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Project Management",
+      "provider": {
+        "@type": "Organization",
+        "name": "Enconsta Consulting Pvt Ltd"
+      },
+      "description": "Project Control, Quality & Resource Optimization"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Manpower Consulting",
+      "provider": {
+        "@type": "Organization",
+        "name": "Enconsta Consulting Pvt Ltd"
+      },
+      "description": "Technical Sourcing & Payroll Administration"
+    }
+  ],
+  "faq": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What engineering sectors does Enconsta serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Enconsta serves Oil & Gas, Petrochemical, Refinery, Power Plant, Solar, Wind Energy, and Industrial Infrastructure sectors globally."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are Enconsta's core capabilities?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our core capabilities are divided into four main groupings: Engineering (Process, Mechanical, HSE), Infrastructure (Civil & Piping), Systems (Electrical & Instrumentation), and Digital (AI-enabled workflows & software integration)."
+        }
+      }
+    ]
+  }
+}
