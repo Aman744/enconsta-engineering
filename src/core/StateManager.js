@@ -2,10 +2,15 @@ import EventBus from './EventBus.js';
 
 class StateManager {
   constructor() {
+    const isLowPower = typeof window !== 'undefined' && (
+      window.innerWidth < 768 || 
+      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4)
+    );
+
     this.state = {
       bootComplete: false,
       currentSection: 'hero', // e.g. 'hero', 'universe', 'about', etc.
-      lowPowerMode: false,
+      lowPowerMode: isLowPower,
       activeCapability: 'engineering', // 'engineering', 'infrastructure', 'systems', 'digital'
       selectedExecutive: null,
       scrollProgress: 0,
