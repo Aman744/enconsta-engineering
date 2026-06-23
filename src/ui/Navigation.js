@@ -35,9 +35,9 @@ export class Navigation {
     window.addEventListener('scroll', () => {
       let current = 'hero';
       sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= sectionTop - 150) {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top + window.scrollY;
+        if (window.scrollY >= sectionTop - 250) {
           current = section.getAttribute('id');
         }
       });

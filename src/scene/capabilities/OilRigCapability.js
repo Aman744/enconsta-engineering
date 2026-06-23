@@ -22,6 +22,7 @@ class OilRigCapability {
   }
 
   mount(parentGroup) {
+    console.log('[OilRigCapability] mount() called, initialized =', this.initialized);
     if (this.initialized) {
       parentGroup.add(this.mesh);
       this.adjustPositionForSection();
@@ -271,6 +272,7 @@ class OilRigCapability {
   }
 
   unmount(parentGroup) {
+    console.log('[OilRigCapability] unmount() called');
     parentGroup.remove(this.mesh);
   }
 
@@ -301,7 +303,13 @@ class OilRigCapability {
   adjustPositionForSection() {
     const currentSection = StateManager.get('currentSection');
     if (currentSection === 'hero' || currentSection === 'universe') {
-      this.mesh.position.set(13, -5, 0);  // Positioned on the right side in Hero section, slightly lowered
+      const camera = window.camera;
+      let targetX = 13;
+      if (camera) {
+        // Dynamically adjust X position based on camera Z zoom to keep it visible on the right side
+        targetX = camera.position.z * 0.26;
+      }
+      this.mesh.position.set(targetX, -5, 0);  // Positioned on the right side in Hero section, slightly lowered
       this.mesh.scale.setScalar(0.72);   // Scaled nicely to fit behind text
     } else {
       this.mesh.position.set(32, 0, 0);  // Positioned for Capabilities Panel 3

@@ -40,6 +40,7 @@ export class SceneManager {
 
     this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
     this.camera.position.set(0, 0, 50);
+    window.camera = this.camera;
 
     this.clock = new THREE.Clock();
 
@@ -109,12 +110,18 @@ export class SceneManager {
   async handleSectionTransition(section) {
     // 0. Smoothly reset camera position to center for non-capabilities sections
     if (this.camera && section !== 'capabilities') {
-      gsap.to(this.camera.position, {
-        x: 0,
-        y: 0,
-        duration: 0.8,
-        overwrite: 'auto'
-      });
+      if (section === 'hero' || section === 'universe') {
+        // Force immediate snap to center to guarantee visibility and bypass any ScrollTrigger overrides
+        this.camera.position.x = 0;
+        this.camera.position.y = 0;
+      } else {
+        gsap.to(this.camera.position, {
+          x: 0,
+          y: 0,
+          duration: 0.8,
+          overwrite: 'auto'
+        });
+      }
     }
 
     // 1. Define active modules for each section to prevent overlapping backgrounds
@@ -128,10 +135,12 @@ export class SceneManager {
     };
 
     const activeModules = activeModulesMap[section] || [];
+    console.log(`[SceneManager] Transition to "${section}". Active modules:`, activeModules);
 
     // 2. Unmount all loaded modules that are not active for this section
     Object.keys(this.loadedScenes).forEach(id => {
       if (!activeModules.includes(id)) {
+        console.log(`[SceneManager] Unmounting inactive module: ${id}`);
         SceneLifecycle.unmount(id, this.scene);
         RenderManager.unregisterModule(id);
       }
@@ -140,6 +149,7 @@ export class SceneManager {
     // 3. Lazy-load WebGL scenes only when the viewport approaches their scrolling zones
     try {
       if (section === 'hero' || section === 'universe') {
+        console.log(`[SceneManager] Requesting OilRigCapability for section: ${section}`);
         await this.loadSceneModule('OilRigCapability', () => import('./capabilities/OilRigCapability.js'));
       } else if (section === 'capabilities') {
         await this.loadSceneModule('capabilities_process', () => import('./capabilities/ProcessPlant.js'));
@@ -160,12 +170,14 @@ export class SceneManager {
 
   async loadSceneModule(id, importPromise) {
     if (this.loadedScenes[id]) {
+      console.log(`[SceneManager] Module "${id}" already loaded. Re-mounting...`);
       // Re-mount if unmounted previously due to memory management
       SceneLifecycle.mount(id, this.scene);
       RenderManager.registerModule(id);
       return;
     }
 
+    console.log(`[SceneManager] Loading new module: "${id}"`);
     const module = await importPromise();
     const sceneInstance = module.default;
 

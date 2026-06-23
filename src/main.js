@@ -32,6 +32,20 @@ class App {
     this.sceneManager = null;
     this.ui = {};
 
+    // Periodic debugger to trace camera position and active children
+    setInterval(() => {
+      if (StateManager.get('bootComplete') && this.sceneManager) {
+        const rig = this.sceneManager.scene.children.find(c => c.type === 'Group' || c.constructor.name === 'Group');
+        console.log('[PERIODIC DEBUG]', {
+          currentSection: StateManager.get('currentSection'),
+          cameraPos: { x: this.sceneManager.camera.position.x, y: this.sceneManager.camera.position.y, z: this.sceneManager.camera.position.z },
+          rigMounted: !!rig,
+          rigVisible: rig ? rig.visible : false,
+          rigPosition: rig ? { x: rig.position.x, y: rig.position.y, z: rig.position.z } : null
+        });
+      }
+    }, 2000);
+
     this.init();
   }
 
@@ -295,6 +309,26 @@ class App {
 
             this.sceneManager.camera.position.x = camX;
             this.sceneManager.camera.position.y = yOffset;
+          }
+        },
+        onLeave: () => {
+          if (this.sceneManager && this.sceneManager.camera) {
+            gsap.to(this.sceneManager.camera.position, {
+              x: 0,
+              y: 0,
+              duration: 0.8,
+              overwrite: 'auto'
+            });
+          }
+        },
+        onLeaveBack: () => {
+          if (this.sceneManager && this.sceneManager.camera) {
+            gsap.to(this.sceneManager.camera.position, {
+              x: 0,
+              y: 0,
+              duration: 0.8,
+              overwrite: 'auto'
+            });
           }
         }
       }
