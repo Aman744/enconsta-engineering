@@ -7,6 +7,7 @@ import EventBus from './core/EventBus.js';
 import AssetLoader from './core/AssetLoader.js';
 import RenderManager from './core/RenderManager.js';
 import SceneManager from './scene/SceneManager.js';
+import LoaderScene from './scene/LoaderScene.js';
 
 // UI Modules
 import Navigation from './ui/Navigation.js';
@@ -142,6 +143,9 @@ class App {
   }
 
   setupPreloader() {
+    // Initialize the self-assembling 3D preloader refinery
+    this.loaderScene = new LoaderScene();
+
     // Register mock assets to load (in production this waits for fonts, SVGs, etc.)
     AssetLoader.add('font', 'Outfit', 'Outfit');
     AssetLoader.add('font', 'Inter', 'Inter');
@@ -158,6 +162,10 @@ class App {
     AssetLoader.onProgress((progress) => {
       if (progressBar) {
         progressBar.style.width = `${progress * 100}%`;
+      }
+
+      if (this.loaderScene) {
+        this.loaderScene.updateProgress(progress);
       }
 
       // Simulate sequential log feedback based on loading milestones
@@ -185,6 +193,11 @@ class App {
         }
       }
 
+      // Ensure 3D loader registers 100% complete
+      if (this.loaderScene) {
+        this.loaderScene.updateProgress(1.0);
+      }
+
       stepReady.classList.remove('opacity-0');
       stepReady.classList.add('text-green');
 
@@ -192,6 +205,14 @@ class App {
         // Slide out boot screen
         if (bootLoader) {
           bootLoader.style.transform = 'translateY(-100%)';
+          
+          // Clean up 3D loader resources after transition completes (1s)
+          setTimeout(() => {
+            if (this.loaderScene) {
+              this.loaderScene.destroy();
+              this.loaderScene = null;
+            }
+          }, 1000);
         }
         StateManager.set('bootComplete', true);
 
