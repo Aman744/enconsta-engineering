@@ -215,11 +215,13 @@ section {
 }
 
 .boot-logo {
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-  font-weight: 700;
   margin-bottom: var(--spacing-md);
-  color: #FFFFFF;
+}
+
+.boot-logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
 }
 
 .boot-progress-bar {
@@ -252,6 +254,10 @@ section {
 
 .text-cyan {
   color: var(--color-accent);
+}
+
+.text-white {
+  color: #FFFFFF !important;
 }
 
 .text-green {
@@ -296,11 +302,14 @@ section {
 }
 
 .logo {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
 }
 
 .logo-symbol {
@@ -567,6 +576,18 @@ section {
   background-image:
     linear-gradient(to right, var(--color-secondary) 1px, transparent 1px),
     linear-gradient(to bottom, var(--color-secondary) 1px, transparent 1px);
+}
+
+.bp-logo-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 160px;
+  max-height: 160px;
+  width: auto;
+  height: auto;
+  display: block;
 }
 
 .paragraph-large {

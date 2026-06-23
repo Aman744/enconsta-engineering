@@ -5,10 +5,9 @@ class ElectricalGrid {
   constructor() {
     this.mesh = new THREE.Group();
     this.mesh.position.set(30, 0, 0); // Position on the camera journey track
+    this.mesh.scale.setScalar(0.62); // Scaled down to match other capabilities
     this.initialized = false;
     this.cables = [];
-    this.flowParticles = null;
-    this.particleCount = 30;
   }
 
   mount(parentGroup) {
@@ -86,22 +85,6 @@ class ElectricalGrid {
       this.cables.push(curve);
     });
 
-    // 4. Flowing Sparks/Electrical Flow particles
-    const particleGeom = new THREE.BufferGeometry();
-    const positions = new Float32Array(this.particleCount * 3);
-    particleGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    this.flowParticles = new THREE.Points(particleGeom, Materials.energyParticle);
-    this.mesh.add(this.flowParticles);
-
-    // Set particle initial progress states
-    this.particleData = [];
-    for (let i = 0; i < this.particleCount; i++) {
-      const curveIndex = i % this.cables.length;
-      const progress = Math.random();
-      const speed = 0.3 + Math.random() * 0.4;
-      this.particleData.push({ curveIndex, progress, speed });
-    }
-
     parentGroup.add(this.mesh);
     this.initialized = true;
   }
@@ -111,23 +94,7 @@ class ElectricalGrid {
   }
 
   update(time, delta) {
-    if (!this.initialized || !this.flowParticles) return;
-
-    const positions = this.flowParticles.geometry.attributes.position.array;
-
-    for (let i = 0; i < this.particleCount; i++) {
-      const p = this.particleData[i];
-      p.progress += p.speed * delta;
-      if (p.progress > 1) p.progress = 0;
-
-      const curve = this.cables[p.curveIndex];
-      const pt = curve.getPointAt(p.progress);
-
-      positions[i * 3] = pt.x;
-      positions[i * 3 + 1] = pt.y;
-      positions[i * 3 + 2] = pt.z;
-    }
-    this.flowParticles.geometry.attributes.position.needsUpdate = true;
+    // Static model, no dynamic updates needed
   }
 
   dispose() {
