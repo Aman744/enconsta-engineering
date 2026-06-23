@@ -75,6 +75,7 @@ class LoaderScene {
     // 5. Add Resize Handler
     this.resizeHandler = () => this.onResize();
     window.addEventListener('resize', this.resizeHandler);
+    this.onResize();
   }
 
   buildRefineryModel() {
