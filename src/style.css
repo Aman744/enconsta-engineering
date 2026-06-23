@@ -1633,6 +1633,18 @@ section {
   color: #FFFFFF;
 }
 
+.footer-logo {
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
 .footer-links-col {
   display: flex;
   flex-direction: column;
