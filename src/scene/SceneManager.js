@@ -121,7 +121,7 @@ export class SceneManager {
     const activeModulesMap = {
       'hero': ['OilRigCapability'],
       'universe': ['OilRigCapability'],
-      'capabilities': ['capabilities_process', 'capabilities_pipeline', 'OilRigCapability', 'capabilities_digital'],
+      'capabilities': ['capabilities_process', 'capabilities_pipeline', 'capabilities_electrical', 'capabilities_digital'],
       'ai-engineering': ['ai_command'],
       'renewables-section': ['windfarm'],
       'global-map': ['globe']
@@ -144,7 +144,7 @@ export class SceneManager {
       } else if (section === 'capabilities') {
         await this.loadSceneModule('capabilities_process', () => import('./capabilities/ProcessPlant.js'));
         await this.loadSceneModule('capabilities_pipeline', () => import('./capabilities/PipelineCorridor.js'));
-        await this.loadSceneModule('OilRigCapability', () => import('./capabilities/OilRigCapability.js'));
+        await this.loadSceneModule('capabilities_electrical', () => import('./capabilities/ElectricalGrid.js'));
         await this.loadSceneModule('capabilities_digital', () => import('./capabilities/DigitalTwin.js'));
       } else if (section === 'ai-engineering') {
         await this.loadSceneModule('ai_command', () => import('./AICommandCenter.js'));
