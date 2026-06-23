@@ -154,6 +154,40 @@
               design, creative problem-solving, and a commitment to performance excellence.</p>
           </div>
         </div>
+
+        <h4 class="about-values-title text-navy" style="margin-top: 40px; margin-bottom: 20px; font-size: 1.25rem;">Our Core Values</h4>
+        <div class="values-grid">
+          <div class="value-card">
+            <span class="value-icon">&#10004;</span>
+            <h5>Uncompromising Quality</h5>
+            <p>Adhering to strict standards to ensure execution excellence and safety.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon">&#128737;</span>
+            <h5>Integrity & Transparency</h5>
+            <p>Honest and clear alignment with clients, partners, and engineering audits.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon">&#128657;</span>
+            <h5>Health, Safety & Environment</h5>
+            <p>Loss prevention design protecting personnel, assets, and ecosystems.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon">&#128100;</span>
+            <h5>Customer-Centric Commitment</h5>
+            <p>Tailored scoping and detailed engineering exceeding expectations.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon">&#128200;</span>
+            <h5>Employee Growth & Empowerment</h5>
+            <p>Continuous training and professional development in engineering fields.</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon">&#128161;</span>
+            <h5>Innovation & Improvement</h5>
+            <p>Integrating emerging technologies, digital tools, and smart checks.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -435,6 +469,58 @@
     </div>
   </section>
 
+  <!-- 07B Software Capabilities Sub-Section -->
+  <section class="software-section bg-dark border-top">
+    <div class="container software-ecosystem">
+      <div class="text-center" style="margin-bottom: 40px;">
+        <span class="section-pre text-cyan">TECHNICAL COMPETENCE</span>
+        <h3 class="text-white" style="font-size: 2rem; margin-top: 10px;">Software & Tool Ecosystem</h3>
+        <p class="opacity-70" style="max-width: 600px; margin: 15px auto 0 auto; font-size: 0.95rem;">
+          We utilize industry-standard specialized software tools across all engineering disciplines to guarantee precision, safety compliance, and global delivery.
+        </p>
+      </div>
+      
+      <div class="software-grid">
+        <div class="software-col">
+          <h5>Process Simulation</h5>
+          <div class="software-badges">
+            <span>Hysis</span><span>Olga</span><span>Unisim</span><span>Pipenet</span><span>Flare Sim</span><span>HTRI</span><span>Flarenet</span><span>Pipesim</span>
+          </div>
+        </div>
+        <div class="software-col">
+          <h5>Process & Piping 3D</h5>
+          <div class="software-badges">
+            <span>Caesar II</span><span>PDMS</span><span>E3D</span><span>PDS</span><span>SP3D</span><span>Plant 3D</span><span>AutoCAD</span><span>MicroStation</span>
+          </div>
+        </div>
+        <div class="software-col">
+          <h5>Mechanical</h5>
+          <div class="software-badges">
+            <span>PV Elite</span><span>Ansys FEA</span><span>AME Tank</span><span>HAP</span>
+          </div>
+        </div>
+        <div class="software-col">
+          <h5>Civil & Structural</h5>
+          <div class="software-badges">
+            <span>STAAD Pro</span><span>GT STRUDL</span><span>Tekla</span><span>Revit</span><span>SACS</span><span>MAT 3D</span><span>FDN3D</span><span>GRL WEAP</span>
+          </div>
+        </div>
+        <div class="software-col">
+          <h5>Electrical & Instrumentation</h5>
+          <div class="software-badges">
+            <span>ETAP</span><span>EDSA</span><span>Digsilent</span><span>SPEL</span><span>SPI (InTools)</span><span>SPPID</span>
+          </div>
+        </div>
+        <div class="software-col">
+          <h5>HSE & Controls</h5>
+          <div class="software-badges">
+            <span>PHA Pro</span><span>PHASST</span><span>Flaresim</span><span>Primavera P6</span><span>MS Project</span><span>Navisworks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 08 Renewable Energy Section -->
   <section id="renewables-section" class="renewables-section text-center">
     <div class="container">
@@ -483,18 +569,161 @@
       <div class="divider-line"></div>
 
       <div class="projects-showcase">
-        <h3 class="showcase-title text-navy text-center">Representative Executed Projects</h3>
-        <div class="projects-list" id="projects-target">
-          <!-- Rendered dynamically -->
+        <h3 class="showcase-title text-navy text-center">Executed Project Directory</h3>
+        <p class="section-desc text-muted text-center" style="max-width: 600px; margin: 10px auto 30px auto; font-size: 0.95rem;">
+          Browse and filter our complete record of executed and ongoing multidisciplinary engineering projects across international boundaries.
+        </p>
+
+        <!-- Project Filter & Search Bar Controls -->
+        <div class="table-controls">
+          <div class="search-box">
+            <input type="text" id="project-search" placeholder="Search by client, project, or country...">
+          </div>
+          <div class="filter-group">
+            <div class="filter-box">
+              <select id="project-filter-sector">
+                <option value="all">All Sectors</option>
+                <option value="Oil & Gas">Oil & Gas</option>
+                <option value="Petrochemical">Petrochemical</option>
+                <option value="Civil & Structural">Civil & Structural</option>
+                <option value="Fertilizer">Fertilizer</option>
+                <option value="Green Energy">Green Energy</option>
+              </select>
+            </div>
+            <div class="filter-box">
+              <select id="project-filter-status">
+                <option value="all">All Statuses</option>
+                <option value="Completed">Completed</option>
+                <option value="In Progress">In Progress</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Responsive Table -->
+        <div class="table-wrapper" style="overflow-x: auto; margin-bottom: 20px;">
+          <table class="project-table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Project Description</th>
+                <th>Location</th>
+                <th>Sector</th>
+                <th>Service</th>
+                <th>Period</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="project-table-target">
+              <!-- Injected Dynamically by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="table-pagination" style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+          <button class="btn btn-outline btn-sm" id="prev-page-btn" style="padding: 8px 16px; font-size: 0.8rem;">&larr; Previous</button>
+          <span id="page-indicator" style="font-size: 0.85rem; font-weight: 500;">Page 1 of 4</span>
+          <button class="btn btn-outline btn-sm" id="next-page-btn" style="padding: 8px 16px; font-size: 0.8rem;">Next &rarr;</button>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- 11 Execution Suite: Quality & Fabrication Section -->
+  <section id="execution-suite" class="execution-section bg-white text-dark border-top">
+    <div class="container grid-2">
+      <div class="suite-card quality-box">
+        <span class="section-pre text-blue">11A / COMPLIANCE</span>
+        <h2 class="section-title text-navy">Quality Management System</h2>
+        <p class="paragraph-large" style="margin-bottom: 25px;">
+          Our operations are governed through a robust QMS aligned with ISO 55000 standards to meet stringent safety and regulatory benchmarks.
+        </p>
+        
+        <div class="doc-levels-list">
+          <div class="level-item">
+            <span class="level-num">1</span>
+            <div class="level-text-block">
+              <strong>Policies</strong>
+              <p>Defining organizational commitments, safety regulations, and corporate values.</p>
+            </div>
+          </div>
+          <div class="level-item">
+            <span class="level-num">2</span>
+            <div class="level-text-block">
+              <strong>Manuals</strong>
+              <p>Outlining the framework structure, discipline scope, and procedural limits.</p>
+            </div>
+          </div>
+          <div class="level-item">
+            <span class="level-num">3</span>
+            <div class="level-text-block">
+              <strong>Guidelines & Procedures</strong>
+              <p>Detailed technical controls for process simulations, calculations, and audits.</p>
+            </div>
+          </div>
+          <div class="level-item">
+            <span class="level-num">4</span>
+            <div class="level-text-block">
+              <strong>Templates, Forms & Records</strong>
+              <p>Standardizing test documentation, review checklists, and structural sheets.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="suite-card fabrication-box">
+        <span class="section-pre text-blue">11B / MANUFACTURING</span>
+        <h2 class="section-title text-navy">Fabrication & Skid Systems</h2>
+        <p class="paragraph-large" style="margin-bottom: 25px;">
+          We operate in-house fabrication units in Chennai and Hyderabad, providing turnkey process skids and specialized heavy equipment.
+        </p>
+        
+        <ul class="fab-bullets">
+          <li><strong>Modular Process Skids:</strong> Fully integrated packages incorporating piping, instruments, mechanical, and electrical components.</li>
+          <li><strong>Specialized Equipment:</strong> Thermal exchangers, high-pressure vessels, desalters, separator columns, pig launchers, and receivers.</li>
+          <li><strong>Piping & Structural:</strong> Pipe rack structures, piping spools, manifolds, and chemical injection skids.</li>
+          <li><strong>Parallel Construction:</strong> Dual-track site fabrication and modular engineering, accelerating project commissioning timelines.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-
-  <!-- 13 Contact Section -->
+  <!-- 12 Associate Partners Ticker -->
+  <section id="associates" class="associates-section bg-light border-top border-bottom" style="padding: 60px 0;">
+    <div class="container text-center">
+      <span class="section-pre text-blue">12 / TRUSTED NETWORK</span>
+      <h3 class="text-navy" style="margin-top: 10px; margin-bottom: 40px; font-size: 1.75rem;">Our Associates & Partners</h3>
+      
+      <div class="marquee-container" style="overflow: hidden; white-space: nowrap; width: 100%; position: relative;">
+        <div class="marquee-track" style="display: inline-flex; gap: 40px; width: max-content;">
+          <!-- Two identical sets of partner cards for continuous loop -->
+          <div class="partner-card">ENERFLEX</div>
+          <div class="partner-card">CEONE</div>
+          <div class="partner-card">VALDEL</div>
+          <div class="partner-card">PETRO6</div>
+          <div class="partner-card">AXIA</div>
+          <div class="partner-card">PENTA GLOBAL</div>
+          <div class="partner-card">MAXPRO</div>
+          <div class="partner-card">MATHI ENGG</div>
+          <div class="partner-card">SGK INDUSTRIES</div>
+          <div class="partner-card">KAVEESHA</div>
+          
+          <!-- Duplicated set -->
+          <div class="partner-card">ENERFLEX</div>
+          <div class="partner-card">CEONE</div>
+          <div class="partner-card">VALDEL</div>
+          <div class="partner-card">PETRO6</div>
+          <div class="partner-card">AXIA</div>
+          <div class="partner-card">PENTA GLOBAL</div>
+          <div class="partner-card">MAXPRO</div>
+          <div class="partner-card">MATHI ENGG</div>
+          <div class="partner-card">SGK INDUSTRIES</div>
+          <div class="partner-card">KAVEESHA</div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section id="contact" class="contact-section bg-white text-dark">
     <div class="container grid-2">
       <div class="contact-info">

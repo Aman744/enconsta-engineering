@@ -17,7 +17,8 @@ import ContactForm from './ui/ContactForm.js';
 // Content Lists
 import { services } from './content/services.js';
 import { offices } from './content/offices.js';
-import { facilities, representativeProjects } from './content/credentials.js';
+import { facilities } from './content/credentials.js';
+import { executedProjects } from './content/executedProjects.js';
 
 // Performance Service
 import { performanceService } from './services/performanceService.js';
@@ -61,6 +62,7 @@ class App {
 
     // Render HTML content layers dynamically from content files
     this.renderDynamicContent();
+    this.setupProjectTable();
 
     // Draw industry ecosystem nodes and connecting SVG paths
     this.setupEcosystemNetwork();
@@ -119,23 +121,6 @@ class App {
       `).join('');
     }
 
-    // 4. Render representative executed projects
-    const projectsTarget = document.getElementById('projects-target');
-    if (projectsTarget) {
-      projectsTarget.innerHTML = representativeProjects.map(p => `
-        <div class="project-row-item">
-          <div class="project-main-meta">
-            <h4>${p.client}</h4>
-            <span>End User: ${p.endUser}</span>
-          </div>
-          <div class="project-body-info">
-            <h5>${p.title}</h5>
-            <p>${p.desc}</p>
-          </div>
-          <span class="project-loc-tag">${p.location}</span>
-        </div>
-      `).join('');
-    }
   }
 
   setupSmoothScroll() {
@@ -432,6 +417,125 @@ class App {
 
     setTimeout(drawLines, 100);
     window.addEventListener('resize', drawLines);
+  }
+
+  setupProjectTable() {
+    const tableBody = document.getElementById('project-table-target');
+    if (!tableBody) return;
+
+    const searchInput = document.getElementById('project-search');
+    const sectorFilter = document.getElementById('project-filter-sector');
+    const statusFilter = document.getElementById('project-filter-status');
+    const prevBtn = document.getElementById('prev-page-btn');
+    const nextBtn = document.getElementById('next-page-btn');
+    const indicator = document.getElementById('page-indicator');
+
+    this.projectSearchQuery = '';
+    this.projectFilterSector = 'all';
+    this.projectFilterStatus = 'all';
+    this.projectCurrentPage = 1;
+    this.projectPageSize = 10;
+
+    const renderTable = () => {
+      // 1. Filter the projects
+      let filtered = executedProjects.filter(p => {
+        const matchesSearch = 
+          p.client.toLowerCase().includes(this.projectSearchQuery) ||
+          p.project.toLowerCase().includes(this.projectSearchQuery) ||
+          p.location.toLowerCase().includes(this.projectSearchQuery);
+        
+        const matchesSector = this.projectFilterSector === 'all' || p.type.toLowerCase().includes(this.projectFilterSector.toLowerCase());
+        const matchesStatus = this.projectFilterStatus === 'all' || p.status.toLowerCase() === this.projectFilterStatus.toLowerCase();
+
+        return matchesSearch && matchesSector && matchesStatus;
+      });
+
+      // 2. Paginate
+      const totalItems = filtered.length;
+      const totalPages = Math.max(1, Math.ceil(totalItems / this.projectPageSize));
+      
+      // Clamp page number
+      if (this.projectCurrentPage > totalPages) this.projectCurrentPage = totalPages;
+      if (this.projectCurrentPage < 1) this.projectCurrentPage = 1;
+
+      const startIndex = (this.projectCurrentPage - 1) * this.projectPageSize;
+      const paginated = filtered.slice(startIndex, startIndex + this.projectPageSize);
+
+      // 3. Render HTML
+      if (paginated.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="7" class="text-center" style="padding: 30px; opacity: 0.6;">No matching projects found.</td></tr>`;
+      } else {
+        tableBody.innerHTML = paginated.map(p => `
+          <tr>
+            <td style="font-weight: 600; color: var(--color-primary);">${p.client}</td>
+            <td style="line-height: 1.5;">${p.project}</td>
+            <td>${p.location}</td>
+            <td><span class="sector-label" style="font-size: 0.75rem; background: rgba(6,26,64,0.03); padding: 2px 6px; border-radius: 4px;">${p.type}</span></td>
+            <td>${p.service}</td>
+            <td>${p.period}</td>
+            <td><span class="status-tag ${p.status.toLowerCase().replace(' ', '-')}">${p.status}</span></td>
+          </tr>
+        `).join('');
+      }
+
+      // 4. Update UI controls
+      if (indicator) {
+        indicator.textContent = `Page ${this.projectCurrentPage} of ${totalPages}`;
+      }
+      if (prevBtn) {
+        prevBtn.disabled = this.projectCurrentPage === 1;
+      }
+      if (nextBtn) {
+        nextBtn.disabled = this.projectCurrentPage === totalPages;
+      }
+    };
+
+    // Bind Search Input
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        this.projectSearchQuery = e.target.value.toLowerCase().trim();
+        this.projectCurrentPage = 1; // Reset to page 1 on search
+        renderTable();
+      });
+    }
+
+    // Bind Sector Filter
+    if (sectorFilter) {
+      sectorFilter.addEventListener('change', (e) => {
+        this.projectFilterSector = e.target.value;
+        this.projectCurrentPage = 1;
+        renderTable();
+      });
+    }
+
+    // Bind Status Filter
+    if (statusFilter) {
+      statusFilter.addEventListener('change', (e) => {
+        this.projectFilterStatus = e.target.value;
+        this.projectCurrentPage = 1;
+        renderTable();
+      });
+    }
+
+    // Bind Pagination Buttons
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (this.projectCurrentPage > 1) {
+          this.projectCurrentPage--;
+          renderTable();
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        this.projectCurrentPage++;
+        renderTable();
+      });
+    }
+
+    // Initial render
+    renderTable();
   }
 }
 

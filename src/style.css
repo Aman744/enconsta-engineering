@@ -2007,3 +2007,355 @@ section {
     display: none;
   }
 }
+
+/* ==========================================================================
+   Company Profile Content Extensions
+   ========================================================================== */
+
+/* 1. Our Values styling */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.value-card {
+  background: rgba(6, 26, 64, 0.02);
+  border: 1px solid rgba(6, 26, 64, 0.06);
+  padding: var(--spacing-lg);
+  border-radius: 6px;
+  transition: all 0.3s var(--easing-premium);
+}
+
+.value-card:hover {
+  background: #FFFFFF;
+  box-shadow: 0 10px 30px rgba(0, 180, 216, 0.08);
+  border-color: rgba(0, 180, 216, 0.3);
+  transform: translateY(-2px);
+}
+
+.value-icon {
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
+
+.value-card h5 {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 600;
+}
+
+.value-card p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* 2. Software Tools Ecosystem styling */
+.software-section {
+  padding: var(--spacing-xl) 0;
+}
+
+.software-ecosystem {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.software-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.software-col {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: var(--spacing-lg);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.software-col:hover {
+  border-color: rgba(0, 180, 216, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.software-col h5 {
+  font-size: 0.95rem;
+  color: #FFFFFF;
+  margin-bottom: var(--spacing-md);
+  border-left: 2px solid var(--color-accent);
+  padding-left: 10px;
+  font-weight: 600;
+}
+
+.software-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.software-badges span {
+  background: rgba(0, 180, 216, 0.08);
+  color: #00b4d8;
+  border: 1px solid rgba(0, 180, 216, 0.15);
+  padding: 4px 9px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  transition: all 0.2s ease;
+}
+
+.software-badges span:hover {
+  background: #00b4d8;
+  color: #FFFFFF;
+  border-color: #00b4d8;
+  transform: translateY(-1px);
+}
+
+/* 3. Executed Projects Table styling */
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.search-box input {
+  width: 320px;
+  max-width: 100%;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: 1px solid rgba(6, 26, 64, 0.15);
+  background: #FFFFFF;
+  font-size: 0.88rem;
+  color: var(--color-primary);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.search-box input:focus {
+  border-color: var(--color-accent);
+}
+
+.filter-group {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-box select {
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: 1px solid rgba(6, 26, 64, 0.15);
+  background: #FFFFFF;
+  font-size: 0.88rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  outline: none;
+}
+
+.filter-box select:focus {
+  border-color: var(--color-accent);
+}
+
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+  min-width: 800px;
+}
+
+.project-table th {
+  background: rgba(6, 26, 64, 0.04);
+  color: var(--color-primary);
+  padding: 12px 16px;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(6, 26, 64, 0.08);
+}
+
+.project-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(6, 26, 64, 0.05);
+  color: var(--color-text-muted);
+}
+
+.project-table tr:hover td {
+  background: rgba(6, 26, 64, 0.01);
+}
+
+.status-tag {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-tag.completed {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.status-tag.in-progress {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+/* 4. Quality & Fabrication Suite styling */
+.execution-section {
+  padding: var(--spacing-xxl) 0;
+}
+
+.suite-card {
+  background: rgba(6, 26, 64, 0.01);
+  border: 1px solid rgba(6, 26, 64, 0.05);
+  padding: 35px;
+  border-radius: 8px;
+}
+
+.doc-levels-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.level-item {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.level-num {
+  background: var(--color-accent);
+  color: #FFFFFF;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.level-text-block strong {
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.level-text-block p {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.fab-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fab-bullets li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.fab-bullets li::before {
+  content: "\2022";
+  color: var(--color-accent);
+  font-weight: bold;
+  position: absolute;
+  left: 5px;
+  font-size: 1.1rem;
+}
+
+/* 5. Associates Marquee Ticker styling */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.partner-card {
+  background: rgba(6, 26, 64, 0.02);
+  border: 1px solid rgba(6, 26, 64, 0.06);
+  padding: 12px 24px;
+  border-radius: 4px;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.partner-card:hover {
+  border-color: var(--color-accent);
+  background: rgba(0, 180, 216, 0.04);
+  color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Responsive Extensions */
+@media (max-width: 1024px) {
+  .values-grid,
+  .software-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .values-grid,
+  .software-grid {
+    grid-template-columns: 1fr;
+  }
+  .table-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-box input {
+    width: 100%;
+  }
+  .filter-group {
+    width: 100%;
+  }
+  .filter-box {
+    flex: 1;
+  }
+  .filter-box select {
+    width: 100%;
+  }
+}
