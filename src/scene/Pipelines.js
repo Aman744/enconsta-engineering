@@ -24,6 +24,9 @@ class Pipelines {
     // Set up points material & geometry
     this.createFlowParticles();
 
+    // Hide pipelines
+    this.mesh.visible = false;
+
     parentGroup.add(this.mesh);
     this.initialized = true;
   }
@@ -54,12 +57,6 @@ class Pipelines {
     paths.forEach(pts => {
       const curve = new THREE.CatmullRomCurve3(pts);
       this.curves.push(curve);
-
-      // Render faint line representation of pipeline
-      const points = curve.getPoints(50);
-      const geom = new THREE.BufferGeometry().setFromPoints(points);
-      const line = new THREE.Line(geom, Materials.blueprintLine);
-      this.mesh.add(line);
     });
   }
 
@@ -98,6 +95,7 @@ class Pipelines {
   }
 
   update(time, delta) {
+    if (!this.mesh.visible) return;
     if (!this.particleGroup || !this.initialized) return;
 
     const positions = this.particleGroup.geometry.attributes.position.array;

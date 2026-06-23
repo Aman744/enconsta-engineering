@@ -12,13 +12,11 @@ import SceneManager from './scene/SceneManager.js';
 import Navigation from './ui/Navigation.js';
 import Counters from './ui/Counters.js';
 import ContactForm from './ui/ContactForm.js';
-import TeamModal from './ui/TeamModal.js';
 
 // Content Lists
 import { services } from './content/services.js';
 import { offices } from './content/offices.js';
 import { facilities, representativeProjects } from './content/credentials.js';
-import { executives } from './content/executives.js';
 
 // Performance Service
 import { performanceService } from './services/performanceService.js';
@@ -38,14 +36,17 @@ class App {
 
   async init() {
     console.log('[Enconsta App] Initializing application framework...');
-    
+
     // Initialize observability logs
     monitoringService.init();
     performanceService.startTracking();
 
+    // Initialize WebGL Scene Manager first so 3D assets start loading immediately
+    this.sceneManager = new SceneManager();
+
     // Render HTML content layers dynamically from content files
     this.renderDynamicContent();
-    
+
     // Draw industry ecosystem nodes and connecting SVG paths
     this.setupEcosystemNetwork();
 
@@ -53,7 +54,6 @@ class App {
     this.ui.navigation = new Navigation();
     this.ui.counters = new Counters();
     this.ui.contactForm = new ContactForm();
-    this.ui.teamModal = new TeamModal();
 
     // Set up smooth scrolling via Lenis
     this.setupSmoothScroll();
@@ -148,7 +148,7 @@ class App {
 
     const progressBar = document.getElementById('boot-progress');
     const bootLoader = document.getElementById('boot-loader');
-    
+
     // Console log steps
     const step1 = document.getElementById('console-step-1');
     const step2 = document.getElementById('console-step-2');
@@ -159,7 +159,7 @@ class App {
       if (progressBar) {
         progressBar.style.width = `${progress * 100}%`;
       }
-      
+
       // Simulate sequential log feedback based on loading milestones
       if (progress > 0.3) {
         step1.classList.remove('opacity-50');
@@ -175,23 +175,29 @@ class App {
       }
     });
 
-    AssetLoader.onComplete(() => {
+    AssetLoader.onComplete(async () => {
+      // Wait for initial WebGL assets (like Pipelines) to finish loading
+      if (this.sceneManager && this.sceneManager.initialLoadPromise) {
+        try {
+          await this.sceneManager.initialLoadPromise;
+        } catch (err) {
+          console.error('[App] Failed to await initial 3D load:', err);
+        }
+      }
+
       stepReady.classList.remove('opacity-0');
       stepReady.classList.add('text-green');
 
       setTimeout(() => {
-        // Slide out boot screen and initialize WebGL
+        // Slide out boot screen
         if (bootLoader) {
           bootLoader.style.transform = 'translateY(-100%)';
         }
         StateManager.set('bootComplete', true);
 
-        // Initialize WebGL Scene Manager after first DOM paint
-        this.sceneManager = new SceneManager();
-
         // Bind GSAP Scroll Animations
         this.setupScrollAnimations();
-        
+
         // Start Hero Section rotating ticker
         this.startHeroTicker();
       }, 800);
@@ -211,7 +217,7 @@ class App {
       'Wind Energy',
       'Industrial Infrastructure'
     ];
-    
+
     const tickerText = document.getElementById('ticker-text');
     if (!tickerText) return;
 
@@ -224,7 +230,7 @@ class App {
         onComplete: () => {
           index = (index + 1) % sectors.length;
           tickerText.textContent = sectors[index];
-          gsap.fromTo(tickerText, 
+          gsap.fromTo(tickerText,
             { opacity: 0, y: 10 },
             { opacity: 1, y: 0, duration: 0.3 }
           );
@@ -258,10 +264,16 @@ class App {
         scrub: 1,
         onUpdate: (self) => {
           // Travel camera dynamically through X positions based on horizontal scroll progress
-          // Camera starts at X = -45 (Process) and moves to X = 45 (Digital Twin)
+          // Offset the camera position depending on viewport layout to prevent overlapping HTML text
           if (this.sceneManager && this.sceneManager.camera) {
-            const camX = gsap.utils.interpolate(-45, 45, self.progress);
+            const isDesktop = window.innerWidth > 1024;
+            const xOffset = isDesktop ? -12 : 0;
+            const yOffset = isDesktop ? 0 : 8; // Shift camera up on mobile to push model to the bottom half
+
+            const camX = gsap.utils.interpolate(-90, 90, self.progress) + xOffset;
+
             this.sceneManager.camera.position.x = camX;
+            this.sceneManager.camera.position.y = yOffset;
           }
         }
       }
@@ -281,6 +293,18 @@ class App {
           EventBus.emit('ai:stepchange', { step: idx + 1 });
         }
       });
+    });
+
+    // 4. Refinery Assembly (Section 2) static trigger
+    ScrollTrigger.create({
+      id: 'refinery-trigger',
+      trigger: '.universe-canvas-trigger',
+      start: 'top bottom',
+      end: 'bottom center',
+      scrub: 1.5,
+      onUpdate: (self) => {
+        EventBus.emit('refinery:assemble', self.progress);
+      }
     });
   }
 

@@ -4,7 +4,7 @@ import { Materials } from '../../assets/Materials.js';
 class ProcessPlant {
   constructor() {
     this.mesh = new THREE.Group();
-    this.mesh.position.set(-45, 0, 0); // Position on the camera journey track
+    this.mesh.position.set(-90, 0, 0); // Position on the camera journey track
     this.reactor = null;
     this.initialized = false;
   }

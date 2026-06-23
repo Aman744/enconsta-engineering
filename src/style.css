@@ -41,7 +41,8 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   background-color: var(--color-bg-dark);
@@ -49,7 +50,8 @@ html, body {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
-  scroll-behavior: auto; /* Managed by Lenis */
+  scroll-behavior: auto;
+  /* Managed by Lenis */
 }
 
 body.typography-outfit h1,
@@ -89,7 +91,7 @@ a {
   opacity: 0.03;
   mix-blend-mode: multiply;
   background-size: 80px 80px;
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(0, 180, 216, 0.3) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 180, 216, 0.3) 1px, transparent 1px);
 }
@@ -107,6 +109,7 @@ a {
   0% {
     transform: translate(0, 0) rotate(0deg);
   }
+
   100% {
     transform: translate(100px, -100px) rotate(360deg);
   }
@@ -247,10 +250,21 @@ section {
   transition: opacity 0.3s ease;
 }
 
-.text-cyan { color: var(--color-accent); }
-.text-green { color: #10B981; }
-.opacity-50 { opacity: 0.5; }
-.opacity-0 { opacity: 0; }
+.text-cyan {
+  color: var(--color-accent);
+}
+
+.text-green {
+  color: #10B981;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
 
 /* ==========================================================================
    Sticky Header & Navigation
@@ -308,7 +322,8 @@ section {
   transition: color 0.3s ease;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
   color: #FFFFFF;
 }
 
@@ -323,7 +338,8 @@ section {
   transition: width 0.3s var(--easing-premium);
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -486,21 +502,30 @@ section {
 }
 
 @keyframes flow {
-  0% { top: -10px; }
-  100% { top: 40px; }
+  0% {
+    top: -10px;
+  }
+
+  100% {
+    top: 40px;
+  }
 }
 
 /* ==========================================================================
    02 Engineering Universe & 08 Renewable Energy Canvas Hooks
    ========================================================================== */
-.universe-section, .renewables-section, .transition-section {
+.universe-section,
+.renewables-section,
+.rig-section {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.universe-canvas-trigger, .renewables-trigger, .transition-canvas-trigger {
+.universe-canvas-trigger,
+.renewables-trigger,
+.oilrig-canvas-trigger {
   height: 10px;
 }
 
@@ -539,7 +564,7 @@ section {
   height: 100%;
   opacity: 0.05;
   background-size: 40px 40px;
-  background-image: 
+  background-image:
     linear-gradient(to right, var(--color-secondary) 1px, transparent 1px),
     linear-gradient(to bottom, var(--color-secondary) 1px, transparent 1px);
 }
@@ -618,7 +643,8 @@ section {
   line-height: 1;
 }
 
-.counter-plus, .counter-suffix {
+.counter-plus,
+.counter-suffix {
   display: inline-block;
   font-family: var(--font-heading);
   font-size: 2rem;
@@ -745,7 +771,8 @@ section {
 
 .horizontal-scroll-container {
   display: flex;
-  width: 400vw; /* 4 panels */
+  width: 400vw;
+  /* 4 panels */
   height: 100%;
 }
 
@@ -852,7 +879,8 @@ section {
   cursor: pointer;
 }
 
-.twin-step.active, .twin-step:hover {
+.twin-step.active,
+.twin-step:hover {
   border-left-color: var(--color-accent);
   background-color: rgba(0, 180, 216, 0.03);
 }
@@ -968,10 +996,22 @@ section {
   height: 100%;
   background-color: var(--color-accent);
 }
-.width-85 { width: 85%; }
-.width-70 { width: 70%; }
-.width-90 { width: 90%; }
-.width-95 { width: 95%; }
+
+.width-85 {
+  width: 85%;
+}
+
+.width-70 {
+  width: 70%;
+}
+
+.width-90 {
+  width: 90%;
+}
+
+.width-95 {
+  width: 95%;
+}
 
 .floating-panel span {
   font-family: var(--font-mono);
@@ -983,7 +1023,7 @@ section {
    09 Global Operations Map
    ========================================================================== */
 .map-section {
-  background-color: var(--color-bg-dark);
+  background-color: #030c1ec9;
 }
 
 .offices-info-cards {
@@ -1039,7 +1079,8 @@ section {
   min-height: 45px;
 }
 
-.office-phone, .office-email {
+.office-phone,
+.office-email {
   font-size: 0.8rem;
   color: var(--color-text-muted-light);
   display: block;
@@ -1268,12 +1309,15 @@ section {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  pointer-events: none;
+  /* Let scroll/swipes pass through wrapper */
 }
 
 .ecosystem-network-map {
   width: 100%;
   height: 100%;
   position: relative;
+  pointer-events: none;
 }
 
 /* Node layout for ecosystem */
@@ -1293,9 +1337,12 @@ section {
   z-index: 10;
   cursor: pointer;
   padding: 5px;
+  pointer-events: auto;
+  /* Reactivate click/hover events on actual nodes */
 }
 
-.eco-node:hover, .eco-node.active {
+.eco-node:hover,
+.eco-node.active {
   border-color: var(--color-accent);
   transform: scale(1.1);
   box-shadow: 0 10px 25px rgba(0, 180, 216, 0.15);
@@ -1527,7 +1574,8 @@ section {
   gap: var(--spacing-sm);
 }
 
-.footer-links-col h4, .footer-address-col h4 {
+.footer-links-col h4,
+.footer-address-col h4 {
   font-size: 1rem;
   color: #FFFFFF;
   margin-bottom: var(--spacing-sm);
@@ -1722,7 +1770,10 @@ section {
    Accessibility & Reduced Motion Rules
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+
+  *,
+  ::before,
+  ::after {
     animation-delay: -1ms !important;
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
@@ -1731,7 +1782,9 @@ section {
     transition-duration: 0s !important;
     transition-delay: 0s !important;
   }
-  .pipeline-particle, .blueprint-symbol {
+
+  .pipeline-particle,
+  .blueprint-symbol {
     animation: none !important;
   }
 }
@@ -1741,10 +1794,13 @@ section {
     --color-text-muted: #111827;
     --color-text-muted-light: #111827;
   }
-  .bg-light, .bg-white {
+
+  .bg-light,
+  .bg-white {
     background-color: #FFFFFF;
     color: #000000;
   }
+
   .bg-dark {
     background-color: #000000;
     color: #FFFFFF;
@@ -1767,6 +1823,7 @@ section {
     padding: 0;
     z-index: 101;
   }
+
   .mobile-nav-toggle span {
     width: 100%;
     height: 2px;
@@ -1775,14 +1832,17 @@ section {
     transition: all 0.3s var(--easing-premium);
     transform-origin: left center;
   }
+
   .mobile-nav-toggle[aria-expanded="true"] span:nth-child(1) {
     transform: rotate(45deg) translate(2px, 1px);
     background-color: var(--color-accent);
   }
+
   .mobile-nav-toggle[aria-expanded="true"] span:nth-child(2) {
     opacity: 0;
     width: 0%;
   }
+
   .mobile-nav-toggle[aria-expanded="true"] span:nth-child(3) {
     transform: rotate(-45deg) translate(2px, -1px);
     background-color: var(--color-accent);
@@ -1805,28 +1865,35 @@ section {
     transition: right 0.4s var(--easing-premium);
     z-index: 100;
   }
+
   .nav.mobile-open {
     right: 0;
   }
 
-  .grid-2, .grid-3 {
+  .grid-2,
+  .grid-3 {
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
   }
+
   .counters-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .offices-info-cards {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .services-grid {
     grid-template-columns: 1fr 1fr;
   }
+
   .project-row-item {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-sm);
   }
+
   .project-body-info {
     padding: 0;
   }
@@ -1836,23 +1903,29 @@ section {
   .counters-grid {
     grid-template-columns: 1fr 1fr;
   }
+
   .offices-info-cards {
     grid-template-columns: 1fr;
   }
+
   .services-grid {
     grid-template-columns: 1fr;
   }
+
   .facilities-grid {
     grid-template-columns: 1fr;
   }
+
   .profile-grid {
     grid-template-columns: 1fr;
   }
+
   .hierarchy-level {
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-lg);
   }
+
   .leadership-hierarchy::before {
     display: none;
   }

@@ -4,7 +4,7 @@ import { Materials } from '../../assets/Materials.js';
 class PipelineCorridor {
   constructor() {
     this.mesh = new THREE.Group();
-    this.mesh.position.set(-15, 0, 0); // Position on the camera journey track
+    this.mesh.position.set(-30, 0, 0); // Position on the camera journey track
     this.pipes = [];
     this.initialized = false;
   }
