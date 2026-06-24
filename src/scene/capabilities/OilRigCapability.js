@@ -217,6 +217,202 @@ class OilRigCapability {
     rigGroup.add(stack);
     this.flareStack = stack;
 
+    // H. Helideck (Helipad)
+    const helideck = new THREE.Group();
+    helideck.position.set(-10, 13.8, 0); // Extended off the left side of the main deck
+
+    const padGeom = new THREE.BoxGeometry(6, 0.3, 6);
+    const padMesh = new THREE.Mesh(padGeom, deckFillMat);
+    const padEdges = new THREE.EdgesGeometry(padGeom);
+    const padWire = new THREE.LineSegments(padEdges, blueLineMat);
+    helideck.add(padMesh);
+    helideck.add(padWire);
+
+    // Support braces extending from the hull below to the pad
+    const braceGeom = new THREE.BufferGeometry();
+    const braceVertices = new Float32Array([
+      -3, -0.15, -3, 0, -4, 0,
+      3, -0.15, -3, 0, -4, 0,
+      -3, -0.15, 3, 0, -4, 0,
+      3, -0.15, 3, 0, -4, 0
+    ]);
+    braceGeom.setAttribute('position', new THREE.BufferAttribute(braceVertices, 3));
+    const braces = new THREE.LineSegments(braceGeom, blueLineMat);
+    helideck.add(braces);
+
+    // The 'H' landing mark
+    const hGeom = new THREE.BufferGeometry();
+    const hVertices = new Float32Array([
+      -1, 0.16, -1.5, -1, 0.16, 1.5,  // Left bar
+      1, 0.16, -1.5, 1, 0.16, 1.5,    // Right bar
+      -1, 0.16, 0, 1, 0.16, 0         // Crossbar
+    ]);
+    hGeom.setAttribute('position', new THREE.BufferAttribute(hVertices, 3));
+    const hMark = new THREE.LineSegments(hGeom, new THREE.LineBasicMaterial({
+      color: 0x10b981, // Green landing mark
+      linewidth: 2
+    }));
+    helideck.add(hMark);
+    rigGroup.add(helideck);
+
+    // I. Drill Pipe Racks
+    const pipeRack = new THREE.Group();
+    pipeRack.position.set(4, 13.8, 3); // Stacked on the right-front deck
+
+    const pipeGeom = new THREE.CylinderGeometry(0.2, 0.2, 6, 6);
+    pipeGeom.rotateZ(Math.PI / 2); // Lay horizontal
+    const pipeEdges = new THREE.EdgesGeometry(pipeGeom);
+
+    // Stack them in a pyramid (3 at base, 2 middle, 1 top)
+    const stackOffsets = [
+      { x: 0, y: 0.2, z: -0.6 },
+      { x: 0, y: 0.2, z: 0 },
+      { x: 0, y: 0.2, z: 0.6 },
+      { x: 0, y: 0.55, z: -0.3 },
+      { x: 0, y: 0.55, z: 0.3 },
+      { x: 0, y: 0.9, z: 0 }
+    ];
+
+    stackOffsets.forEach(offset => {
+      const pMesh = new THREE.Mesh(pipeGeom, deckFillMat);
+      pMesh.position.set(offset.x, offset.y, offset.z);
+      const pWire = new THREE.LineSegments(pipeEdges, blueLineMat);
+      pWire.position.set(offset.x, offset.y, offset.z);
+      pipeRack.add(pMesh);
+      pipeRack.add(pWire);
+    });
+
+    // Pipe rack supports (frame holding them)
+    const frameGeom = new THREE.BoxGeometry(0.2, 1.2, 1.8);
+    const frameEdges = new THREE.EdgesGeometry(frameGeom);
+    
+    // Front and back supports
+    [-2.8, 2.8].forEach(x => {
+      const fMesh = new THREE.Mesh(frameGeom, deckFillMat);
+      fMesh.position.set(x, 0.6, 0);
+      const fWire = new THREE.LineSegments(frameEdges, blueLineMat);
+      fWire.position.set(x, 0.6, 0);
+      pipeRack.add(fMesh);
+      pipeRack.add(fWire);
+    });
+    rigGroup.add(pipeRack);
+
+    // J. Piping / Manifold lines along the platform sides and down pillars
+    const manifold = new THREE.Group();
+
+    // Draw some pipelines running along the deck perimeter and down the pillars
+    const manifoldGeom = new THREE.BufferGeometry();
+    const manifoldVertices = new Float32Array([
+      // Line 1: Main intake line down pillar 1 and along deck
+      -5, 0, -5,  -5, 12, -5, // Up pillar
+      -5, 12, -5, -5, 12.9, -4.5, // Bend to deck
+      -5, 12.9, -4.5, -5, 12.9, 5, // Along deck edge
+      -5, 12.9, 5, -2, 13.8, 5, // Up to cabins/derrick
+
+      // Line 2: Output discharge line
+      5, 12.9, -5, 5, 12.9, 5, // Along right deck edge
+      5, 12.9, 5, 6, 13.8, 6,  // Connecting to flare stack
+      
+      // Line 3: Cross deck manifold
+      -5, 12.9, 2, 5, 12.9, 2
+    ]);
+    manifoldGeom.setAttribute('position', new THREE.BufferAttribute(manifoldVertices, 3));
+    
+    const pipingLineMat = new THREE.LineBasicMaterial({
+      color: 0x00b4d8,
+      transparent: true,
+      opacity: 0.95
+    });
+    
+    const pipes = new THREE.LineSegments(manifoldGeom, pipingLineMat);
+    manifold.add(pipes);
+
+    // Valve wheel on the deck manifold
+    const valveGroup = new THREE.Group();
+    valveGroup.position.set(0, 12.9, 2);
+    const vWheelGeom = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 8);
+    const vWheel = new THREE.LineSegments(new THREE.EdgesGeometry(vWheelGeom), blueLineMat);
+    vWheel.rotation.x = Math.PI / 2;
+    valveGroup.add(vWheel);
+    
+    const vStemGeom = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(0, 0.4, 0)
+    ]);
+    const vStem = new THREE.Line(vStemGeom, blueLineMat);
+    valveGroup.add(vStem);
+    manifold.add(valveGroup);
+    rigGroup.add(manifold);
+
+    // K. Satellite Dome & Antenna Tower on cabin roof
+    const telecom = new THREE.Group();
+    telecom.position.set(-4, 16.8, -3); // Placed on top of the cabins
+
+    // Spherical radome dome
+    const domeGeom = new THREE.SphereGeometry(1, 8, 8, 0, Math.PI * 2, 0, Math.PI / 2);
+    const domeMesh = new THREE.Mesh(domeGeom, deckFillMat);
+    const domeEdges = new THREE.EdgesGeometry(domeGeom);
+    const domeWire = new THREE.LineSegments(domeEdges, blueLineMat);
+    telecom.add(domeMesh);
+    telecom.add(domeWire);
+
+    // Small lattice tower for communications
+    const antennaTowerGeom = new THREE.CylinderGeometry(0.1, 0.4, 4, 3, 2, true);
+    const antennaTower = new THREE.LineSegments(new THREE.EdgesGeometry(antennaTowerGeom), blueLineMat);
+    antennaTower.position.set(2, 2, 1);
+    telecom.add(antennaTower);
+
+    // Whip antenna line
+    const whipAntennaGeom = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(2, 4, 1),
+      new THREE.Vector3(2, 6.5, 1)
+    ]);
+    const whip = new THREE.Line(whipAntennaGeom, blueLineMat);
+    telecom.add(whip);
+    rigGroup.add(telecom);
+
+    // L. Lifeboat Capsules
+    const lifeboats = new THREE.Group();
+
+    // Two lifeboats, one on left, one on right side of cabins
+    const boatGeom = new THREE.BoxGeometry(1.2, 0.8, 2.5);
+    const boatEdges = new THREE.EdgesGeometry(boatGeom);
+
+    const davitGeom = new THREE.BufferGeometry();
+    const davitVertices = new Float32Array([
+      0, 0, -1.2, -0.6, 0.8, -1.2,
+      -0.6, 0.8, -1.2, -0.6, 0.4, -1.2,
+      0, 0, 1.2, -0.6, 0.8, 1.2,
+      -0.6, 0.8, 1.2, -0.6, 0.4, 1.2
+    ]);
+    davitGeom.setAttribute('position', new THREE.BufferAttribute(davitVertices, 3));
+
+    const boatPositions = [
+      { x: -7.6, y: 12.5, z: -3, rotY: 0 },
+      { x: 7.6, y: 12.5, z: -3, rotY: Math.PI }
+    ];
+
+    boatPositions.forEach(pos => {
+      const bGroup = new THREE.Group();
+      bGroup.position.set(pos.x, pos.y, pos.z);
+      bGroup.rotation.y = pos.rotY;
+
+      // Capsule mesh & outline
+      const bMesh = new THREE.Mesh(boatGeom, deckFillMat);
+      bMesh.position.set(-0.6, -0.4, 0);
+      const bWire = new THREE.LineSegments(boatEdges, blueLineMat);
+      bWire.position.set(-0.6, -0.4, 0);
+      bGroup.add(bMesh);
+      bGroup.add(bWire);
+
+      // Support davits
+      const davits = new THREE.LineSegments(davitGeom, blueLineMat);
+      bGroup.add(davits);
+
+      lifeboats.add(bGroup);
+    });
+    rigGroup.add(lifeboats);
+
     this.mesh.add(rigGroup);
   }
 
