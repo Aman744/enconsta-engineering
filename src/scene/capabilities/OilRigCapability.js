@@ -19,6 +19,11 @@ class OilRigCapability {
     this.flareStack = null;
     this.redBeacon = null;
     this.spotlights = null;
+
+    // Ocean components
+    this.ocean = null;
+    this.oceanGeometry = null;
+    this.oceanInitialPositions = null;
   }
 
   mount(parentGroup) {
@@ -36,6 +41,9 @@ class OilRigCapability {
 
     // 2. Create spotlights and beacons
     this.createRigLights();
+
+    // 3. Create ocean surface
+    this.createOceanSurface();
 
     parentGroup.add(this.mesh);
     this.initialized = true;
@@ -167,13 +175,22 @@ class OilRigCapability {
     derrickLattice.position.y = 0;
     derrickGroup.add(derrickLattice);
 
+    // Vertical drill string (pipe string) inside derrick
+    const drillStringGeom = new THREE.CylinderGeometry(0.18, 0.18, 17, 4);
+    const drillStringMesh = new THREE.Mesh(drillStringGeom, deckFillMat);
+    drillStringMesh.position.y = 8.5; // centered vertically in derrick
+    const drillStringWire = new THREE.LineSegments(new THREE.EdgesGeometry(drillStringGeom), blueLineMat);
+    drillStringWire.position.y = 8.5;
+    derrickGroup.add(drillStringMesh);
+    derrickGroup.add(drillStringWire);
+
     rigGroup.add(derrickGroup);
     this.derrick = derrickGroup;
 
-    // F. Blueprint Cranes
+    // F. Blueprint Cranes (Lattice truss style)
     const cranePositions = [
-      { x: -6.5, y: 13.8, z: 5.5, rotY: -Math.PI / 4, length: 7 },
-      { x: 6.5, y: 13.8, z: -5.5, rotY: Math.PI * 0.75, length: 6 }
+      { x: -6.5, y: 13.8, z: 5.5, rotY: -Math.PI / 4, length: 8 },
+      { x: 6.5, y: 13.8, z: -5.5, rotY: Math.PI * 0.75, length: 7 }
     ];
 
     this.cranes = [];
@@ -182,20 +199,51 @@ class OilRigCapability {
       crane.position.set(c.x, c.y, c.z);
       crane.rotation.y = c.rotY;
 
-      const baseGeom = new THREE.CylinderGeometry(0.3, 0.4, 1.5, 5);
+      const baseGeom = new THREE.CylinderGeometry(0.4, 0.5, 2, 6);
       const baseWire = new THREE.LineSegments(new THREE.EdgesGeometry(baseGeom), blueLineMat);
-      baseWire.position.y = 0.75;
+      baseWire.position.y = 1;
       crane.add(baseWire);
 
-      const boomGeom = new THREE.CylinderGeometry(0.1, 0.3, c.length, 3);
+      // Truss Boom (box structure with segments)
+      const segments = 6;
+      const boomGeom = new THREE.BoxGeometry(0.5, 0.5, c.length, 1, 1, segments);
+      // Shift pivot so rotation point is at start of boom
+      boomGeom.translate(0, 0, c.length / 2);
       const boomWire = new THREE.LineSegments(new THREE.EdgesGeometry(boomGeom), blueLineMat);
-      boomWire.rotation.z = Math.PI / 3;
-      boomWire.position.set(c.length * 0.25, c.length * 0.4, 0);
+      
+      // Angle the boom up
+      boomWire.rotation.x = -Math.PI / 4; // angle up
+      boomWire.position.set(0, 2, 0);
       crane.add(boomWire);
 
+      // Add diagonal bracing inside boom segments for high-fidelity look
+      const diagGeom = new THREE.BufferGeometry();
+      const diagVertices = [];
+      const segLength = c.length / segments;
+      for (let i = 0; i < segments; i++) {
+        const z0 = i * segLength;
+        const z1 = (i + 1) * segLength;
+        // X-axis braces
+        diagVertices.push(-0.25, -0.25, z0,  0.25, 0.25, z1);
+        diagVertices.push( 0.25, -0.25, z0, -0.25, 0.25, z1);
+        // Y-axis braces
+        diagVertices.push(-0.25,  0.25, z0,  0.25, -0.25, z1);
+        diagVertices.push( 0.25,  0.25, z0, -0.25, -0.25, z1);
+      }
+      diagGeom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(diagVertices), 3));
+      const diagWire = new THREE.LineSegments(diagGeom, blueLineMat);
+      diagWire.rotation.x = -Math.PI / 4;
+      diagWire.position.set(0, 2, 0);
+      crane.add(diagWire);
+
+      // Cable hanging from the end
+      const endX = 0;
+      const endY = 2 + Math.sin(Math.PI / 4) * c.length;
+      const endZ = Math.cos(Math.PI / 4) * c.length;
+      
       const cableGeom = new THREE.BufferGeometry().setFromPoints([
-        new THREE.Vector3(c.length * 0.5, c.length * 0.8, 0),
-        new THREE.Vector3(c.length * 0.5, c.length * 0.2, 0)
+        new THREE.Vector3(endX, endY, endZ),
+        new THREE.Vector3(endX, endY - 4, endZ)
       ]);
       const cable = new THREE.Line(cableGeom, blueLineMat);
       crane.add(cable);
@@ -413,7 +461,120 @@ class OilRigCapability {
     });
     rigGroup.add(lifeboats);
 
+    // M. Exhaust Stack Chimneys (Group of 4 tall pipes)
+    const chimneys = new THREE.Group();
+    chimneys.position.set(-3, 13.8, -4); // Deck placement
+
+    const chimneyGeom = new THREE.CylinderGeometry(0.25, 0.25, 8, 6, 2, true);
+    const chimneyEdges = new THREE.EdgesGeometry(chimneyGeom);
+    
+    for (let i = 0; i < 4; i++) {
+      const offsetZ = i * 0.9;
+      const heightOffset = i * 0.5; // Staggered heights
+
+      const cMesh = new THREE.Mesh(chimneyGeom, deckFillMat);
+      cMesh.position.set(0, 4 + heightOffset/2, offsetZ);
+      cMesh.scale.y = 1 + heightOffset/8;
+
+      const cWire = new THREE.LineSegments(chimneyEdges, blueLineMat);
+      cWire.position.set(0, 4 + heightOffset/2, offsetZ);
+      cWire.scale.y = 1 + heightOffset/8;
+
+      chimneys.add(cMesh);
+      chimneys.add(cWire);
+    }
+    rigGroup.add(chimneys);
+
+    // N. Guardrails / Handrails around the deck perimeter
+    const rails = new THREE.Group();
+    rails.position.set(0, 13.8, 0); // relative to deck level
+
+    const railPoints = [
+      { x: -7.5, z: -7.5 },
+      { x: 7.5, z: -7.5 },
+      { x: 7.5, z: 7.5 },
+      { x: -7.5, z: 7.5 },
+      { x: -7.5, z: -7.5 } // close loop
+    ];
+
+    const railMat = new THREE.LineBasicMaterial({
+      color: 0x00b4d8,
+      transparent: true,
+      opacity: 0.6
+    });
+
+    const stanchionGeom = new THREE.BufferGeometry();
+    const stanchionVertices = [];
+    const topRailPoints = [];
+    const midRailPoints = [];
+
+    for (let i = 0; i < railPoints.length - 1; i++) {
+      const p1 = railPoints[i];
+      const p2 = railPoints[i + 1];
+      
+      const dx = p2.x - p1.x;
+      const dz = p2.z - p1.z;
+      const len = Math.sqrt(dx*dx + dz*dz);
+      const divisions = Math.ceil(len / 2.5);
+      
+      for (let j = 0; j <= divisions; j++) {
+        const t = j / divisions;
+        const x = p1.x + dx * t;
+        const z = p1.z + dz * t;
+        
+        if (x < -6.5 && z > -3 && z < 3) continue; // Skip helideck attachment point area
+
+        stanchionVertices.push(x, 0, z,  x, 0.9, z);
+        
+        if (j < divisions) {
+          const nextT = (j + 1) / divisions;
+          const nextX = p1.x + dx * nextT;
+          const nextZ = p1.z + dz * nextT;
+          
+          topRailPoints.push(new THREE.Vector3(x, 0.9, z));
+          topRailPoints.push(new THREE.Vector3(nextX, 0.9, nextZ));
+          
+          midRailPoints.push(new THREE.Vector3(x, 0.45, z));
+          midRailPoints.push(new THREE.Vector3(nextX, 0.45, nextZ));
+        }
+      }
+    }
+
+    stanchionGeom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(stanchionVertices), 3));
+    const stanchions = new THREE.LineSegments(stanchionGeom, railMat);
+    rails.add(stanchions);
+
+    const topRailGeom = new THREE.BufferGeometry().setFromPoints(topRailPoints);
+    const topRail = new THREE.LineSegments(topRailGeom, railMat);
+    rails.add(topRail);
+
+    const midRailGeom = new THREE.BufferGeometry().setFromPoints(midRailPoints);
+    const midRail = new THREE.LineSegments(midRailGeom, railMat);
+    rails.add(midRail);
+    rigGroup.add(rails);
+
     this.mesh.add(rigGroup);
+  }
+
+  createOceanSurface() {
+    const size = 120;
+    const segments = 24;
+    const oceanGeom = new THREE.PlaneGeometry(size, size, segments, segments);
+    oceanGeom.rotateX(-Math.PI / 2);
+
+    const oceanMat = new THREE.LineBasicMaterial({
+      color: 0x0077b6,
+      transparent: true,
+      opacity: 0.25
+    });
+
+    this.ocean = new THREE.LineSegments(oceanGeom, oceanMat);
+    this.ocean.position.y = -10;
+    
+    this.oceanGeometry = oceanGeom;
+    this.oceanInitialPositions = oceanGeom.attributes.position.clone();
+    
+    this.mesh.add(this.ocean);
   }
 
   createRigLights() {
@@ -428,14 +589,28 @@ class OilRigCapability {
     this.redBeacon.position.set(0, 20.8, 2); // 20.8 absolute relative to this.mesh (rigGroup y=-10)
     this.mesh.add(this.redBeacon);
 
-    // 2. Spotlights
+    // 2. Spotlights (Dense placement of warm lights matching reference image)
     const lightPositions = [
+      // Deck corners and perimeters
       [-7, 3.8, -7], [7, 3.8, -7], [-7, 3.8, 7], [7, 3.8, 7],
-      [-7, 3.8, 0], [7, 3.8, 0], [0, 3.8, -7],
-      [-2, 6.8, -2], [1, 6.8, -3],
+      [-7, 3.8, 0], [7, 3.8, 0], [0, 3.8, -7], [0, 3.8, 7],
+      [-7, 3.8, -3.5], [-7, 3.8, 3.5], [7, 3.8, -3.5], [7, 3.8, 3.5],
+      [-3.5, 3.8, -7], [3.5, 3.8, -7], [-3.5, 3.8, 7], [3.5, 3.8, 7],
+      
+      // Helipad perimeter
+      [-10, 3.8, -3], [-10, 3.8, 3], [-13, 3.8, 0], [-7, 3.8, 0],
+      [-12, 3.8, -2], [-12, 3.8, 2], [-8, 3.8, -2], [-8, 3.8, 2],
+
+      // Cabins and sub-decks
+      [-2, 6.8, -2], [1, 6.8, -3], [-5, 6.8, -3], [-3, 6.8, -1],
       [-0.8, 6.8, 2.8], [0.8, 6.8, 1.2],
-      [-0.5, 12.8, 2.5], [0.5, 12.8, 1.5],
-      [0, 18.3, 2]
+
+      // Derrick interior vertical lighting (tapering upward)
+      [-0.5, 12.8, 2.5], [0.5, 12.8, 1.5], [0, 5.8, 2], [0, 8.8, 2],
+      [0, 11.8, 2], [0, 14.8, 2], [0, 18.3, 2],
+
+      // Under-deck structural supports
+      [-5, 1.8, -5], [5, 1.8, -5], [-5, 1.8, 5], [5, 1.8, 5]
     ];
 
     const lightsGeometry = new THREE.BufferGeometry();
@@ -448,18 +623,18 @@ class OilRigCapability {
       lightsPositionsArray[idx * 3 + 2] = pos[2];
 
       colorsArray[idx * 3] = 1.0;
-      colorsArray[idx * 3 + 1] = 0.7;
-      colorsArray[idx * 3 + 2] = 0.15;
+      colorsArray[idx * 3 + 1] = 0.75;
+      colorsArray[idx * 3 + 2] = 0.2; // slightly warmer yellow-orange
     });
 
     lightsGeometry.setAttribute('position', new THREE.BufferAttribute(lightsPositionsArray, 3));
     lightsGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
 
     const lightsMaterial = new THREE.PointsMaterial({
-      size: 1.2,
+      size: 1.3,
       vertexColors: true,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.95,
       blending: THREE.AdditiveBlending
     });
 
@@ -483,6 +658,11 @@ class OilRigCapability {
       this.mesh.rotation.y = time * 0.15;
     }
 
+    // Counter-rotate ocean to keep it static while rig rotates
+    if (this.ocean && this.mesh) {
+      this.ocean.rotation.y = -this.mesh.rotation.y;
+    }
+
     // 2. Pulse the red warning beacon
     if (this.redBeacon) {
       const pulse = 0.65 + Math.sin(time * 3.5) * 0.35;
@@ -492,7 +672,27 @@ class OilRigCapability {
 
     // 3. Flicker spotlights
     if (this.spotlights) {
-      this.spotlights.material.size = 1.2 + Math.sin(time * 5.0) * 0.15;
+      this.spotlights.material.size = 1.3 + Math.sin(time * 5.0) * 0.15;
+    }
+
+    // 4. Update ocean waves
+    if (this.ocean && this.oceanGeometry) {
+      const positionAttr = this.oceanGeometry.attributes.position;
+      const initial = this.oceanInitialPositions;
+      const timeScale = time * 1.5;
+      
+      for (let i = 0; i < positionAttr.count; i++) {
+        const x = initial.getX(i);
+        const z = initial.getZ(i);
+        
+        // Complex wave formula using multiple sine/cosine frequencies
+        const wave1 = Math.sin(x * 0.08 + timeScale) * Math.cos(z * 0.08 + timeScale * 0.8) * 0.8;
+        const wave2 = Math.sin(x * 0.15 - timeScale * 1.2) * 0.4;
+        const y = wave1 + wave2;
+        
+        positionAttr.setY(i, y);
+      }
+      positionAttr.needsUpdate = true;
     }
   }
 
@@ -518,6 +718,12 @@ class OilRigCapability {
       SceneLifecycle.disposeObject(child);
     });
     this.mesh.clear();
+    if (this.ocean) {
+      SceneLifecycle.disposeObject(this.ocean);
+      this.ocean = null;
+      this.oceanGeometry = null;
+      this.oceanInitialPositions = null;
+    }
   }
 }
 
