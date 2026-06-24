@@ -203,7 +203,8 @@ section {
   background-color: var(--color-bg-dark);
   z-index: 1000;
   display: flex;
-  flex-direction: column; /* Vertical stack on mobile */
+  flex-direction: column;
+  /* Vertical stack on mobile */
   justify-content: center;
   align-items: center;
   gap: var(--spacing-lg);
@@ -302,6 +303,10 @@ section {
 
 .text-white {
   color: #FFFFFF !important;
+}
+
+.text-navy {
+  color: var(--color-primary) !important;
 }
 
 .text-green {
@@ -1088,7 +1093,7 @@ section {
    09 Global Operations Map
    ========================================================================== */
 .map-section {
-  background-color: #030c1ec9;
+  background-color: white;
 }
 
 .offices-info-cards {
@@ -2042,6 +2047,11 @@ section {
   margin-bottom: var(--spacing-sm);
 }
 
+svg.value-icon {
+  width: 28px;
+  height: 28px;
+}
+
 .value-card h5 {
   font-size: 1rem;
   color: var(--color-primary);
@@ -2209,6 +2219,31 @@ section {
   color: #3b82f6;
 }
 
+.table-pagination span {
+  color: var(--color-primary) !important;
+}
+
+.table-pagination .btn-outline {
+  color: var(--color-primary) !important;
+  border-color: rgba(6, 26, 64, 0.2) !important;
+  background-color: transparent !important;
+}
+
+.table-pagination .btn-outline:hover:not(:disabled) {
+  background-color: rgba(6, 26, 64, 0.06) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  transform: translateY(-1px) !important;
+}
+
+.table-pagination .btn-outline:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  border-color: rgba(6, 26, 64, 0.1) !important;
+  color: var(--color-text-muted) !important;
+}
+
 /* 4. Quality & Fabrication Suite styling */
 .execution-section {
   padding: var(--spacing-xxl) 0;
@@ -2316,6 +2351,7 @@ section {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -2331,6 +2367,7 @@ section {
 
 /* Responsive Extensions */
 @media (max-width: 1024px) {
+
   .values-grid,
   .software-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2338,24 +2375,256 @@ section {
 }
 
 @media (max-width: 768px) {
+
   .values-grid,
   .software-grid {
     grid-template-columns: 1fr;
   }
+
   .table-controls {
     flex-direction: column;
     align-items: stretch;
   }
+
   .search-box input {
     width: 100%;
   }
+
   .filter-group {
     width: 100%;
   }
+
   .filter-box {
     flex: 1;
   }
+
   .filter-box select {
     width: 100%;
   }
+}
+
+/* ==========================================================================
+   Alternating Section Layout Theme Overrides
+   ========================================================================== */
+
+/* 0. bg-dark general utility class */
+.bg-dark {
+  background-color: var(--color-bg-dark) !important;
+  color: var(--color-text-light);
+}
+
+/* 1. Core Values Section (Dark Theme Override) */
+.values-section.bg-dark .value-card {
+  background: rgba(15, 76, 129, 0.15);
+  border: 1px solid rgba(0, 180, 216, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.values-section.bg-dark .value-card:hover {
+  background: rgba(15, 76, 129, 0.3);
+  border-color: var(--color-accent);
+  box-shadow: 0 10px 30px rgba(0, 180, 216, 0.15);
+}
+
+.values-section.bg-dark .value-card h5 {
+  color: #FFFFFF;
+}
+
+.values-section.bg-dark .value-card p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.values-section.bg-dark .value-icon {
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 4px rgba(0, 180, 216, 0.3));
+}
+
+/* 2. Services Section (Dark Theme Override) */
+.services-section.bg-dark .service-card {
+  background-color: rgba(15, 76, 129, 0.15);
+  border: 1px solid rgba(0, 180, 216, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.services-section.bg-dark .service-card:hover {
+  background-color: rgba(15, 76, 129, 0.3);
+  border-color: var(--color-accent);
+  box-shadow: 0 10px 30px rgba(0, 180, 216, 0.15);
+}
+
+.services-section.bg-dark .service-title {
+  color: #FFFFFF;
+}
+
+.services-section.bg-dark .service-subtitle {
+  color: var(--color-text-muted-light);
+}
+
+.services-section.bg-dark .service-bullets li {
+  color: var(--color-text-light);
+}
+
+/* 3. AI Twin Steps (Light Theme Override) */
+.ai-section.bg-white .twin-step {
+  background-color: rgba(6, 26, 64, 0.01);
+  border-left: 3px solid rgba(6, 26, 64, 0.05);
+}
+
+.ai-section.bg-white .twin-step.active,
+.ai-section.bg-white .twin-step:hover {
+  border-left-color: var(--color-accent);
+  background-color: rgba(0, 180, 216, 0.04);
+}
+
+.ai-section.bg-white .step-num {
+  color: rgba(6, 26, 64, 0.15);
+}
+
+.ai-section.bg-white .twin-step.active .step-num {
+  color: var(--color-accent);
+}
+
+.ai-section.bg-white .step-info h4 {
+  color: var(--color-primary);
+}
+
+.ai-section.bg-white .step-info p {
+  color: var(--color-text-muted);
+}
+
+/* 4. Software Tools Ecosystem (Light Theme Override) */
+.software-section.bg-white .software-col {
+  background: rgba(6, 26, 64, 0.01);
+  border: 1px solid rgba(6, 26, 64, 0.05);
+}
+
+.software-section.bg-white .software-col:hover {
+  background: rgba(6, 26, 64, 0.03);
+  border-color: rgba(0, 180, 216, 0.3);
+}
+
+.software-section.bg-white .software-col h5 {
+  color: var(--color-primary);
+}
+
+.software-section.bg-white .opacity-70 {
+  opacity: 0.8;
+  color: var(--color-text-muted);
+}
+
+/* 5. Global Operations Map (Light Theme Override) */
+.map-section.bg-light .office-info-card {
+  background-color: rgba(6, 26, 64, 0.01);
+  border: 1px solid rgba(6, 26, 64, 0.05);
+}
+
+.map-section.bg-light .office-info-card:hover {
+  border-color: var(--color-accent);
+  background-color: rgba(0, 180, 216, 0.03);
+}
+
+.map-section.bg-light .office-info-card h4 {
+  color: var(--color-primary);
+}
+
+.map-section.bg-light .office-address,
+.map-section.bg-light .office-phone,
+.map-section.bg-light .office-email {
+  color: var(--color-text-muted);
+}
+
+/* 6. Credentials Section (Dark Theme Override) */
+.credentials-section.bg-dark .facility-card {
+  background-color: rgba(15, 76, 129, 0.15);
+  border: 1px solid rgba(0, 180, 216, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.credentials-section.bg-dark .facility-card h4 {
+  color: #FFFFFF;
+}
+
+.credentials-section.bg-dark .facility-card p {
+  color: var(--color-text-muted-light);
+}
+
+.credentials-section.bg-dark .facility-card span {
+  color: var(--color-accent);
+}
+
+/* Projects Table & Controls */
+.credentials-section.bg-dark .search-box input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.credentials-section.bg-dark .filter-box select {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.credentials-section.bg-dark .filter-box select option {
+  background-color: var(--color-bg-dark);
+  color: #FFFFFF;
+}
+
+.credentials-section.bg-dark .project-table th {
+  background: rgba(255, 255, 255, 0.04);
+  color: #FFFFFF;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.credentials-section.bg-dark .project-table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--color-text-muted-light);
+}
+
+.credentials-section.bg-dark .project-table td:first-child {
+  color: #FFFFFF !important;
+}
+
+.credentials-section.bg-dark .project-table .sector-label {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--color-accent) !important;
+}
+
+.credentials-section.bg-dark .project-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.credentials-section.bg-dark .table-pagination span {
+  color: #FFFFFF !important;
+}
+
+.credentials-section.bg-dark .table-pagination .btn-outline {
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: transparent !important;
+}
+
+.credentials-section.bg-dark .table-pagination .btn-outline:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px) !important;
+}
+
+.credentials-section.bg-dark .table-pagination .btn-outline:disabled {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* 7. Associates Partners (Dark Theme Override) */
+.associates-section.bg-dark .partner-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: #FFFFFF;
+}
+
+.associates-section.bg-dark .partner-card:hover {
+  border-color: var(--color-accent);
+  background: rgba(0, 180, 216, 0.08);
+  color: var(--color-accent);
 }

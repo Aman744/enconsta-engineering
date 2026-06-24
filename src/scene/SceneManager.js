@@ -156,13 +156,14 @@ export class SceneManager {
         await this.loadSceneModule('capabilities_pipeline', () => import('./capabilities/PipelineCorridor.js'));
         await this.loadSceneModule('capabilities_electrical', () => import('./capabilities/ElectricalGrid.js'));
         await this.loadSceneModule('capabilities_digital', () => import('./capabilities/DigitalTwin.js'));
-      } else if (section === 'ai-engineering') {
-        await this.loadSceneModule('ai_command', () => import('./AICommandCenter.js'));
-      } else if (section === 'renewables-section') {
-        await this.loadSceneModule('windfarm', () => import('./WindFarm.js'));
-      } else if (section === 'global-map') {
-        await this.loadSceneModule('globe', () => import('./Globe.js'));
       }
+      // else if (section === 'ai-engineering') {
+      //   await this.loadSceneModule('ai_command', () => import('./AICommandCenter.js'));
+      // } else if (section === 'renewables-section') {
+      //   await this.loadSceneModule('windfarm', () => import('./WindFarm.js'));
+      // } else if (section === 'global-map') {
+      //   await this.loadSceneModule('globe', () => import('./Globe.js'));
+      // }
     } catch (err) {
       console.error(`[SceneManager] Failed to lazy-load scene for section ${section}:`, err);
     }

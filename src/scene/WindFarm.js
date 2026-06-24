@@ -64,17 +64,21 @@ class WindFarm {
       tower.position.y = height / 2;
       turbineGroup.add(tower);
 
+      // Head Group (Nacelle + Rotor)
+      const headGroup = new THREE.Group();
+      headGroup.position.y = height;
+      turbineGroup.add(headGroup);
+
       // Nacelle (generator box on top)
       const nacelleGeom = new THREE.BoxGeometry(0.8, 0.6, 1.5);
       const nacelle = new THREE.Mesh(nacelleGeom, towerMat);
-      nacelle.position.y = height;
-      nacelle.position.z = 0.2;
-      turbineGroup.add(nacelle);
+      nacelle.position.set(0, 0, 0.2);
+      headGroup.add(nacelle);
 
       // Rotor blade assembly
       const rotorGroup = new THREE.Group();
-      rotorGroup.position.set(spec.x, -12 + height, spec.z + 0.95);
-      rotorGroup.scale.multiplyScalar(spec.scale);
+      rotorGroup.position.set(0, 0, 0.95);
+      headGroup.add(rotorGroup);
 
       // Central cap
       const capGeom = new THREE.SphereGeometry(0.4, 8, 8);
@@ -96,12 +100,14 @@ class WindFarm {
       }
 
       this.mesh.add(turbineGroup);
-      this.mesh.add(rotorGroup);
       
       this.turbines.push(turbineGroup);
       this.rotors.push({
         group: rotorGroup,
-        speed: 1.5 + Math.random() * 0.8 // Rotating blade speed
+        head: headGroup,
+        yawSpeed: 0.08 + Math.random() * 0.08,
+        yawOffset: Math.random() * Math.PI,
+        speed: 2.2 + Math.random() * 0.8 // Rotating blade speed
       });
     });
   }
@@ -155,9 +161,13 @@ class WindFarm {
   update(time, delta) {
     if (!this.initialized) return;
 
-    // 1. Rotate wind turbine rotors
+    // 1. Rotate wind turbine rotors & yaw heads
     this.rotors.forEach(r => {
+      // Blade spin
       r.group.rotation.z += r.speed * delta;
+
+      // Head yaw oscillation (slowly face slightly different wind directions)
+      r.head.rotation.y = Math.sin(time * r.yawSpeed + r.yawOffset) * 0.15;
     });
 
     // 2. Move sunLight to simulate solar sweeps
@@ -176,6 +186,10 @@ class WindFarm {
       }
     });
     this.mesh.clear();
+    this.initialized = false;
+    this.rotors = [];
+    this.turbines = [];
+    this.solarPanels = [];
   }
 }
 
