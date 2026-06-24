@@ -47,6 +47,7 @@ class RenderManager {
     if (this.isRendering) return;
     this.isRendering = true;
     this.clock.getDelta(); // Reset clock delta
+    this.lastTime = this.clock.getElapsedTime();
     this.renderLoop();
     console.log('[RenderManager] Render loop started');
   }
@@ -67,14 +68,19 @@ class RenderManager {
     this.animationFrameId = requestAnimationFrame(() => this.renderLoop());
 
     const time = this.clock.getElapsedTime();
-    const delta = this.clock.getDelta();
 
     // Throttled update for low-power mode (skip frames or cap animations)
     const lowPower = StateManager.get('lowPowerMode');
-    if (lowPower && delta < 0.033) {
-      // Limit to ~30fps in low power mode to save battery
-      return;
+    if (lowPower) {
+      const elapsedSinceLastRender = time - this.lastTime;
+      if (elapsedSinceLastRender < 0.033) {
+        // Limit to ~30fps in low power mode to save battery
+        return;
+      }
     }
+
+    this.lastTime = time;
+    const delta = this.clock.getDelta();
 
     // Update active visual elements registered via lifecycle
     this.activeModules.forEach(id => {
