@@ -678,15 +678,111 @@
   </section>
 
   <!-- 08 Renewable Energy Section -->
-  <section id="renewables-section" class="renewables-section text-center">
-    <div class="container">
-      <span class="section-pre text-cyan">08 / SUSTAINABLE INFRASTRUCTURE</span>
-      <h2 class="section-title">Decarbonizing Energy</h2>
-      <p class="section-desc">
-        Guiding process plants and grids through the green transition. Sizing structural grids for offshore wind farms,
-        solar fields, and battery storage centers.
-      </p>
-      <div class="renewables-trigger"></div>
+  <section id="renewables-section" class="renewables-section text-light">
+    <div class="container grid-2">
+      <div class="renewables-visual">
+        <div class="visual-blueprint-box">
+          <div class="bp-grid-pattern"></div>
+          <svg class="blueprint-svg-schematic" viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+            <!-- Center lines and coordinates -->
+            <line x1="250" y1="20" x2="250" y2="340" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" stroke-dasharray="8,4,2,4" />
+            <line x1="40" y1="180" x2="460" y2="180" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" stroke-dasharray="8,4,2,4" />
+
+            <!-- Wind Turbine Structure -->
+            <g class="blueprint-equipment">
+              <!-- Tower -->
+              <path d="M 145 280 L 148 80 L 152 80 L 155 280 Z" fill="rgba(0, 180, 216, 0.05)" stroke="var(--color-accent)" stroke-width="1.5" />
+              <!-- Tower cross-bracings -->
+              <line x1="147" y1="230" x2="153" y2="230" stroke="var(--color-accent)" stroke-width="1" opacity="0.4" />
+              <line x1="148" y1="180" x2="152" y2="180" stroke="var(--color-accent)" stroke-width="1" opacity="0.4" />
+              <line x1="149" y1="130" x2="151" y2="130" stroke="var(--color-accent)" stroke-width="1" opacity="0.4" />
+              
+              <!-- Foundation block -->
+              <rect x="135" y="280" width="30" height="15" fill="none" stroke="var(--color-accent)" stroke-width="2" />
+              
+              <!-- Nacelle -->
+              <rect x="138" y="70" width="24" height="12" rx="2" fill="rgba(0, 180, 216, 0.1)" stroke="var(--color-accent)" stroke-width="2" />
+              
+              <!-- Spinning Blades Group -->
+              <g class="turbine-blades">
+                <!-- Hub -->
+                <circle cx="150" cy="76" r="4" fill="var(--color-accent)" stroke="#FFFFFF" stroke-width="1" />
+                <!-- Blade 1 -->
+                <path d="M 150 76 Q 148 40, 150 15 Q 152 40, 150 76 Z" fill="rgba(0, 180, 216, 0.2)" stroke="var(--color-accent)" stroke-width="1.5" />
+                <!-- Blade 2 -->
+                <path d="M 150 76 Q 181 94, 203 106 Q 171 112, 150 76 Z" fill="rgba(0, 180, 216, 0.2)" stroke="var(--color-accent)" stroke-width="1.5" />
+                <!-- Blade 3 -->
+                <path d="M 150 76 Q 119 94, 97 106 Q 129 112, 150 76 Z" fill="rgba(0, 180, 216, 0.2)" stroke="var(--color-accent)" stroke-width="1.5" />
+              </g>
+
+              <text x="150" y="315" font-family="var(--font-mono)" font-size="8" fill="var(--color-accent)" text-anchor="middle" font-weight="bold">WTG-01 2.5MW</text>
+            </g>
+
+            <!-- Substation Sub-diagram -->
+            <g class="blueprint-equipment" transform="translate(300, 200)">
+              <!-- Transformer yard boundary -->
+              <rect x="0" y="20" width="80" height="60" rx="3" fill="rgba(0, 180, 216, 0.05)" stroke="var(--color-accent)" stroke-width="1.5" />
+              <!-- Transformer core symbols -->
+              <circle cx="30" cy="50" r="12" fill="none" stroke="var(--color-accent)" stroke-width="1.5" />
+              <circle cx="50" cy="50" r="12" fill="none" stroke="var(--color-accent)" stroke-width="1.5" />
+              <!-- Bushings/connections -->
+              <line x1="30" y1="38" x2="30" y2="20" stroke="var(--color-accent)" stroke-width="1" />
+              <line x1="50" y1="38" x2="50" y2="20" stroke="var(--color-accent)" stroke-width="1" />
+              <text x="40" y="95" font-family="var(--font-mono)" font-size="8" fill="var(--color-accent)" text-anchor="middle">SUBSTATION 33kV</text>
+            </g>
+
+            <!-- Grid Transmission Tower -->
+            <g class="blueprint-equipment" transform="translate(410, 80)">
+              <!-- Tower lattice structure -->
+              <path d="M 15 200 L 25 40 L 35 40 L 45 200 M 20 120 L 40 120 M 22 80 L 38 80 M 25 40 L 35 40" fill="none" stroke="var(--color-accent)" stroke-width="1.5" />
+              <line x1="15" y1="200" x2="45" y2="120" stroke="var(--color-accent)" stroke-width="1" opacity="0.4" />
+              <line x1="45" y1="200" x2="15" y2="120" stroke="var(--color-accent)" stroke-width="1" opacity="0.4" />
+              <line x1="20" y1="120" x2="40" y2="80" stroke="var(--color-accent)" stroke-width="1" opacity="0.4" />
+              <line x1="40" y1="120" x2="20" y2="80" stroke="var(--color-accent)" stroke-width="1" opacity="0.4" />
+              
+              <!-- Crossarms -->
+              <line x1="5" y1="80" x2="55" y2="80" stroke="var(--color-accent)" stroke-width="2" />
+              <line x1="10" y1="120" x2="50" y2="120" stroke="var(--color-accent)" stroke-width="2" />
+              
+              <text x="30" y="215" font-family="var(--font-mono)" font-size="8" fill="var(--color-accent)" text-anchor="middle">110kV GRID</text>
+            </g>
+
+            <!-- Electrical Wiring & Power flow -->
+            <g fill="none" stroke-linecap="round">
+              <!-- Tower Nacelle down to base to substation -->
+              <path d="M 150 82 L 150 280 L 300 280" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2" />
+              <path d="M 150 82 L 150 280 L 300 280" stroke="#10B981" stroke-width="2" class="grid-pulse-wire" />
+              
+              <!-- Substation to Transmission Tower -->
+              <path d="M 350 220 L 350 160 L 420 160" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2" />
+              <path d="M 350 220 L 350 160 L 420 160" stroke="var(--color-accent)" stroke-width="2" class="grid-pulse-wire" />
+            </g>
+
+            <!-- Telemetry Overlay Data -->
+            <g font-family="var(--font-mono)" font-size="6.5" fill="var(--color-accent)" opacity="0.8">
+              <text x="20" y="40">SYS_FREQ: 50.02 Hz</text>
+              <text x="20" y="52">ACTIVE_PWR: 2.14 MW</text>
+              <text x="20" y="64">WIND_SPD: 12.4 m/s</text>
+              
+              <text x="340" y="40">GRID_V: 110.2 kV</text>
+              <text x="340" y="52">PF_COEF: 0.98 Cosφ</text>
+            </g>
+
+            <!-- Scanning Sweep Bar -->
+            <line class="turbine-scan-line" x1="80" y1="76" x2="220" y2="76" stroke="rgba(0, 180, 216, 0.5)" stroke-width="1.5" />
+          </svg>
+        </div>
+      </div>
+      
+      <div class="renewables-content" style="text-align: left;">
+        <span class="section-pre text-cyan">08 / SUSTAINABLE INFRASTRUCTURE</span>
+        <h2 class="section-title text-white">Decarbonizing Energy</h2>
+        <p class="section-desc">
+          Guiding process plants and grids through the green transition. Sizing structural grids for offshore wind farms,
+          solar fields, and battery storage centers.
+        </p>
+        <div class="renewables-trigger"></div>
+      </div>
     </div>
   </section>
 

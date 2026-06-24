@@ -592,6 +592,90 @@ section {
 }
 
 /* ==========================================================================
+   08 Renewable Energy Visual
+   ========================================================================== */
+.renewables-visual {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.renewables-section .visual-blueprint-box {
+  width: 100%;
+  height: 100%;
+  border: 1px dashed rgba(0, 180, 216, 0.3);
+  border-radius: 8px;
+  position: relative;
+  background-color: rgba(0, 180, 216, 0.02);
+}
+
+.renewables-section .bp-grid-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, var(--color-accent) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-accent) 1px, transparent 1px);
+}
+
+/* Turbine blades rotation */
+.turbine-blades {
+  transform-origin: 150px 76px;
+  animation: turbine-spin 8s linear infinite;
+}
+
+@keyframes turbine-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulsing grid power wiring */
+.grid-pulse-wire {
+  stroke-dasharray: 6, 10;
+  animation: grid-power 2s linear infinite;
+}
+
+@keyframes grid-power {
+  0% {
+    stroke-dashoffset: 32;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Turbine laser sweep scanning line */
+.turbine-scan-line {
+  animation: turbine-scan 5s ease-in-out infinite alternate;
+}
+
+@keyframes turbine-scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0.15;
+    filter: drop-shadow(0 0 1px var(--color-accent));
+  }
+  50% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 3px var(--color-accent));
+  }
+  100% {
+    transform: translateY(200px);
+    opacity: 0.15;
+    filter: drop-shadow(0 0 1px var(--color-accent));
+  }
+}
+
+/* ==========================================================================
    03 About Section (White/Blue Theme transition)
    ========================================================================== */
 .bg-light {
