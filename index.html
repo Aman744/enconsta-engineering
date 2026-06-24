@@ -107,99 +107,14 @@
 
   <!-- 02 Engineering Universe Section -->
   <section id="universe" class="universe-section text-light">
-    <div class="container grid-2">
-      <div class="universe-content" style="text-align: left;">
-        <span class="section-pre text-cyan">02 / VISUALIZING INFRASTRUCTURE</span>
-        <h2 class="section-title text-white">The Engineering Universe</h2>
-        <p class="section-desc">
-          Watch blueprint drawings transform into real industrial facilities. Our precision CAD processes convert complex
-          engineering requirements into physical, operations-ready assets.
-        </p>
-        <div class="universe-canvas-trigger"></div>
-      </div>
-
-      <div class="universe-visual">
-        <div class="visual-blueprint-box">
-          <div class="bp-grid-pattern"></div>
-          <svg class="blueprint-svg-schematic" viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
-            <!-- Center coordinates -->
-            <line x1="250" y1="20" x2="250" y2="340" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" stroke-dasharray="8,4,2,4" />
-            <line x1="40" y1="180" x2="460" y2="180" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" stroke-dasharray="8,4,2,4" />
-            
-            <!-- Left Side: 2D P&ID Blueprint (X: 30 -> 230) -->
-            <g class="pid-blueprint" stroke="var(--color-accent)" fill="none" stroke-width="1.5">
-              <!-- Process Line -->
-              <path d="M 30 180 L 150 180 L 150 260 L 230 260" />
-              <!-- Valve symbol -->
-              <g transform="translate(90, 180)" stroke="var(--color-accent)" stroke-width="1.5" fill="rgba(3, 12, 30, 0.9)">
-                <polygon points="-8,-5 8,-5 0,0 -8,5 8,5 0,0" />
-                <line x1="0" y1="0" x2="0" y2="-10" />
-                <path d="M -8 -10 L 8 -10 C 8 -15, -8 -15, -8 -10" />
-              </g>
-              <!-- Transmitter bubble -->
-              <g transform="translate(150, 120)">
-                <circle cx="0" cy="0" r="16" fill="rgba(3, 12, 30, 0.9)" />
-                <line x1="-16" y1="0" x2="16" y2="0" />
-                <text x="0" y="-4" font-family="var(--font-heading)" font-size="7" fill="var(--color-accent)" text-anchor="middle" font-weight="bold">FT</text>
-                <text x="0" y="8" font-family="var(--font-heading)" font-size="7" fill="var(--color-accent)" text-anchor="middle">201</text>
-              </g>
-              <!-- Instrument line -->
-              <line x1="150" y1="136" x2="150" y2="180" stroke-dasharray="3,3" />
-              
-              <!-- Left details -->
-              <text x="35" y="165" font-family="var(--font-mono)" font-size="7" fill="var(--color-accent)" opacity="0.6">FROM FEED STORAGE</text>
-              <text x="210" y="248" font-family="var(--font-mono)" font-size="7" fill="var(--color-accent)" opacity="0.6">TO COLUMN T-101</text>
-            </g>
-
-            <!-- Right Side: 3D Isometric CAD Rendering (X: 270 -> 470) -->
-            <g class="cad-isometric" transform="translate(300, 80)">
-              <!-- Grid ground mesh -->
-              <path d="M 50 160 L 130 120 L 210 160 L 130 200 Z" stroke="rgba(255, 255, 255, 0.1)" fill="none" stroke-width="1" />
-              <path d="M 90 140 L 170 180" stroke="rgba(255, 255, 255, 0.1)" fill="none" stroke-width="1" />
-              <path d="M 90 180 L 170 140" stroke="rgba(255, 255, 255, 0.1)" fill="none" stroke-width="1" />
-
-              <!-- 3D Pipeline Column -->
-              <g stroke="var(--color-accent)" fill="none" stroke-width="2">
-                <path d="M 20 120 L 100 120" stroke-width="4" />
-                <path d="M 20 120 L 100 120" stroke="#FFFFFF" stroke-width="1.5" class="cad-pulse-line" />
-                <path d="M 100 120 L 100 40" stroke-width="4" />
-                <path d="M 100 120 L 100 40" stroke="#FFFFFF" stroke-width="1.5" class="cad-pulse-line" />
-                <g transform="translate(60, 120)" fill="rgba(3, 12, 30, 0.8)">
-                  <polygon points="-12,-8 12,-8 6,8 -6,8" stroke-width="1.5" />
-                  <circle cx="0" cy="-14" r="6" stroke-width="1.5" />
-                  <line x1="0" y1="-8" x2="0" y2="-14" stroke-width="1.5" />
-                </g>
-              </g>
-
-              <!-- Rotating coordinate axes -->
-              <g class="rotating-axes" transform="translate(130, 80)">
-                <circle cx="0" cy="0" r="25" stroke="var(--color-accent)" stroke-dasharray="4,4" stroke-width="1" opacity="0.5" />
-                <line x1="-35" y1="0" x2="35" y2="0" stroke="var(--color-accent)" stroke-width="1" opacity="0.6" />
-                <line x1="0" y1="-35" x2="0" y2="35" stroke="var(--color-accent)" stroke-width="1" opacity="0.6" />
-                <circle cx="35" cy="0" r="2.5" fill="#FFFFFF" />
-                <circle cx="0" cy="-35" r="2.5" fill="#10B981" />
-              </g>
-
-              <text x="130" y="215" font-family="var(--font-mono)" font-size="8" fill="var(--color-accent)" text-anchor="middle" font-weight="bold">CAD MODEL: 3D_SKID_V09</text>
-            </g>
-
-            <!-- Divider line -->
-            <line x1="250" y1="40" x2="250" y2="320" stroke="var(--color-accent)" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.4" />
-
-            <!-- Scanning Sweep Line -->
-            <line class="universe-scan-line" x1="0" y1="30" x2="0" y2="330" stroke="#10B981" stroke-width="2" />
-            
-            <!-- Technical Telemetry -->
-            <g font-family="var(--font-mono)" font-size="6.5" fill="var(--color-accent)" opacity="0.8">
-              <text x="20" y="40">CAD_CONVERSION: ACTIVE</text>
-              <text x="20" y="52">NODES: 1,402 / 1,402</text>
-              
-              <text x="350" y="40">SKID_SCALE: 1:1</text>
-              <text x="350" y="52">STATUS: RESOLVED</text>
-            </g>
-          </svg>
-        </div>
-      </div>
+    <div class="container text-center">
+      <span class="section-pre text-cyan">02 / VISUALIZING INFRASTRUCTURE</span>
+      <h2 class="section-title text-white">The Engineering Universe</h2>
+      <p class="section-desc">
+        Watch blueprint drawings transform into real industrial facilities. Our precision CAD processes convert complex
+        engineering requirements into physical, operations-ready assets.
+      </p>
+      <div class="universe-canvas-trigger"></div>
     </div>
   </section>
 

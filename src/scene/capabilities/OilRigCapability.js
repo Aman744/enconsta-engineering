@@ -698,7 +698,7 @@ class OilRigCapability {
 
   adjustPositionForSection() {
     const currentSection = StateManager.get('currentSection');
-    if (currentSection === 'hero') {
+    if (currentSection === 'hero' || currentSection === 'universe') {
       const camera = window.camera;
       let targetX = 13;
       if (camera) {

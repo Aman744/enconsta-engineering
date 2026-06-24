@@ -110,7 +110,7 @@ export class SceneManager {
   async handleSectionTransition(section) {
     // 0. Smoothly reset camera position to center for non-capabilities sections
     if (this.camera && section !== 'capabilities') {
-      if (section === 'hero') {
+      if (section === 'hero' || section === 'universe') {
         // Force immediate snap to center to guarantee visibility and bypass any ScrollTrigger overrides
         this.camera.position.x = 0;
         this.camera.position.y = 0;
@@ -127,7 +127,7 @@ export class SceneManager {
     // 1. Define active modules for each section to prevent overlapping backgrounds
     const activeModulesMap = {
       'hero': ['OilRigCapability'],
-      'universe': [],
+      'universe': ['OilRigCapability'],
       'capabilities': ['capabilities_process', 'capabilities_pipeline', 'capabilities_electrical', 'capabilities_digital'],
       'ai-engineering': ['ai_command'],
       'renewables-section': ['windfarm'],
@@ -148,7 +148,7 @@ export class SceneManager {
 
     // 3. Lazy-load WebGL scenes only when the viewport approaches their scrolling zones
     try {
-      if (section === 'hero') {
+      if (section === 'hero' || section === 'universe') {
         console.log(`[SceneManager] Requesting OilRigCapability for section: ${section}`);
         await this.loadSceneModule('OilRigCapability', () => import('./capabilities/OilRigCapability.js'));
       } else if (section === 'capabilities') {
