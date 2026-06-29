@@ -10,6 +10,7 @@ import SceneManager from './scene/SceneManager.js';
 import LoaderScene from './scene/LoaderScene.js';
 
 // UI Modules
+import Layout from './ui/Layout.js';
 import Navigation from './ui/Navigation.js';
 import Counters from './ui/Counters.js';
 import ContactForm from './ui/ContactForm.js';
@@ -53,30 +54,54 @@ class App {
   async init() {
     console.log('[Enconsta App] Initializing application framework...');
 
+    // Initialize layout (global header & footer)
+    new Layout();
+
+    // Initialize custom cursor
+    this.initCustomCursor();
+
     // Initialize observability logs
     monitoringService.init();
     performanceService.startTracking();
 
-    // Initialize WebGL Scene Manager first so 3D assets start loading immediately
-    this.sceneManager = new SceneManager();
+    const hasCanvas = !!document.getElementById('webgl-canvas');
+    const isHomepage = hasCanvas && !!document.getElementById('universe');
+    const isCapabilitiesPage = hasCanvas && !!document.querySelector('.capabilities-vertical-wrapper');
 
-    // Render HTML content layers dynamically from content files
-    this.renderDynamicContent();
-    this.setupProjectTable();
+    if (isHomepage) {
+      // Initialize WebGL Scene Manager first so 3D assets start loading immediately
+      this.sceneManager = new SceneManager();
 
-    // Draw industry ecosystem nodes and connecting SVG paths
-    this.setupEcosystemNetwork();
+      // Render HTML content layers dynamically from content files
+      this.renderDynamicContent();
+      this.setupProjectTable();
 
-    // Initialize UI controllers
-    this.ui.navigation = new Navigation();
-    this.ui.counters = new Counters();
-    this.ui.contactForm = new ContactForm();
+      // Draw industry ecosystem nodes and connecting SVG paths
+      this.setupEcosystemNetwork();
 
-    // Set up smooth scrolling via Lenis
-    this.setupSmoothScroll();
+      // Initialize UI controllers
+      this.ui.navigation = new Navigation();
+      this.ui.counters = new Counters();
+      this.ui.contactForm = new ContactForm();
 
-    // Set up boot preloader
-    this.setupPreloader();
+      // Set up smooth scrolling via Lenis
+      this.setupSmoothScroll();
+
+      // Set up boot preloader
+      this.setupPreloader();
+    } else if (isCapabilitiesPage) {
+      // Setup capabilities subpage with WebGL
+      this.initServicesPage();
+
+      // Force state to capabilities before instantiating SceneManager to bypass loading the Oil Rig
+      StateManager.setCurrentSection('capabilities');
+
+      // Initialize WebGL Scene Manager and capabilities transitions
+      this.sceneManager = new SceneManager();
+      this.setupCapabilitiesPageAnimations();
+    } else {
+      this.initServicesPage();
+    }
   }
 
   renderDynamicContent() {
@@ -84,14 +109,17 @@ class App {
     const servicesTarget = document.getElementById('services-target');
     if (servicesTarget) {
       servicesTarget.innerHTML = services.map(s => `
-        <div class="service-card" id="service-${s.id}">
-          <span class="service-icon">//</span>
-          <h3 class="service-title">${s.title}</h3>
-          <p class="service-subtitle">${s.subtitle}</p>
-          <ul class="service-bullets">
-            ${s.bullets.map(b => `<li>${b}</li>`).join('')}
-          </ul>
-        </div>
+        <a href="services/${s.id}/" class="service-card-link">
+          <div class="service-card" id="service-${s.id}">
+            <span class="service-icon">//</span>
+            <h3 class="service-title">${s.title}</h3>
+            <p class="service-subtitle">${s.subtitle}</p>
+            <ul class="service-bullets">
+              ${s.bullets.map(b => `<li>${b}</li>`).join('')}
+            </ul>
+            <span class="service-card-cta">Explore Service &rarr;</span>
+          </div>
+        </a>
       `).join('');
     }
 
@@ -100,11 +128,7 @@ class App {
     if (officesTarget) {
       officesTarget.innerHTML = offices.map(o => `
         <div class="office-info-card">
-          <h4>${o.name} ${o.isHQ ? `<span class="hq-badge">Global HQ</span>` : ''}</h4>
-          <span class="office-region">${o.region}</span>
-          <p class="office-address">${o.address}</p>
-          <span class="office-phone">Tel: ${o.phone}</span>
-          <span class="office-email">Email: ${o.email}</span>
+          <h4>${o.city}</h4>
         </div>
       `).join('');
     }
@@ -272,52 +296,55 @@ class App {
     });
 
     // 2. Capabilities Horizontal Scroll pinning
-    const panels = gsap.utils.toArray('.panel');
-    const pin = gsap.to('.horizontal-scroll-container', {
-      xPercent: -75, // Translate through 4 panels (each 100vw, so xPercent is -75)
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#capabilities-pin',
-        pin: true,
-        start: 'top top',
-        end: '+=300%',
-        scrub: 1,
-        onUpdate: (self) => {
-          // Travel camera dynamically through X positions based on horizontal scroll progress
-          // Offset the camera position depending on viewport layout to prevent overlapping HTML text
-          if (this.sceneManager && this.sceneManager.camera) {
-            const isDesktop = window.innerWidth > 1024;
-            const xOffset = isDesktop ? -12 : 0;
-            const yOffset = isDesktop ? 0 : 8; // Shift camera up on mobile to push model to the bottom half
+    const pinWrapper = document.getElementById('capabilities-pin');
+    if (pinWrapper) {
+      const panels = gsap.utils.toArray('.panel');
+      const pin = gsap.to('.horizontal-scroll-container', {
+        xPercent: -75, // Translate through 4 panels (each 100vw, so xPercent is -75)
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#capabilities-pin',
+          pin: true,
+          start: 'top top',
+          end: '+=300%',
+          scrub: 1,
+          onUpdate: (self) => {
+            // Travel camera dynamically through X positions based on horizontal scroll progress
+            // Offset the camera position depending on viewport layout to prevent overlapping HTML text
+            if (this.sceneManager && this.sceneManager.camera) {
+              const isDesktop = window.innerWidth > 1024;
+              const xOffset = isDesktop ? -12 : 0;
+              const yOffset = isDesktop ? 0 : 8; // Shift camera up on mobile to push model to the bottom half
 
-            const camX = gsap.utils.interpolate(-90, 90, self.progress) + xOffset;
+              const camX = gsap.utils.interpolate(-90, 90, self.progress) + xOffset;
 
-            this.sceneManager.camera.position.x = camX;
-            this.sceneManager.camera.position.y = yOffset;
-          }
-        },
-        onLeave: () => {
-          if (this.sceneManager && this.sceneManager.camera) {
-            gsap.to(this.sceneManager.camera.position, {
-              x: 0,
-              y: 0,
-              duration: 0.8,
-              overwrite: 'auto'
-            });
-          }
-        },
-        onLeaveBack: () => {
-          if (this.sceneManager && this.sceneManager.camera) {
-            gsap.to(this.sceneManager.camera.position, {
-              x: 0,
-              y: 0,
-              duration: 0.8,
-              overwrite: 'auto'
-            });
+              this.sceneManager.camera.position.x = camX;
+              this.sceneManager.camera.position.y = yOffset;
+            }
+          },
+          onLeave: () => {
+            if (this.sceneManager && this.sceneManager.camera) {
+              gsap.to(this.sceneManager.camera.position, {
+                x: 0,
+                y: 0,
+                duration: 0.8,
+                overwrite: 'auto'
+              });
+            }
+          },
+          onLeaveBack: () => {
+            if (this.sceneManager && this.sceneManager.camera) {
+              gsap.to(this.sceneManager.camera.position, {
+                x: 0,
+                y: 0,
+                duration: 0.8,
+                overwrite: 'auto'
+              });
+            }
           }
         }
-      }
-    });
+      });
+    }
 
     // 3. Setup dynamic step highlighting in AI Digital Twin section
     const twinSteps = document.querySelectorAll('.twin-step');
@@ -536,6 +563,276 @@ class App {
 
     // Initial render
     renderTable();
+  }
+
+  initServicesPage() {
+    console.log('[Enconsta App] Initializing Services page context...');
+
+    // Initialize contact form if present
+    if (document.getElementById('engineering-contact-form')) {
+      this.ui.contactForm = new ContactForm();
+    }
+
+    // 1. Initialize Lenis Smooth Scroll
+    this.lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+      infinite: false,
+    });
+
+    const raf = (time) => {
+      this.lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    this.lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      this.lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    // Global scroll helper
+    window.scrollToElement = (selector) => {
+      const target = document.querySelector(selector);
+      if (target) this.lenis.scrollTo(target, { offset: -80, duration: 1.2 });
+    };
+
+    // 2. Header Scroll state (.scrolled class toggle)
+    const header = document.querySelector('.header');
+    if (header) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    }
+
+    // 3. Mobile Navigation Toggle (.mobile-open class on .nav)
+    const mobileToggle = document.querySelector('.mobile-nav-toggle');
+    const navElement = document.querySelector('.nav');
+    if (mobileToggle && navElement) {
+      mobileToggle.addEventListener('click', () => {
+        const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+        mobileToggle.setAttribute('aria-expanded', !expanded);
+        navElement.classList.toggle('mobile-open');
+      });
+    }
+
+    // 5. Table of Contents (TOC) Scrollspy Link tracking
+    const tocAside = document.getElementById('toc-aside');
+    if (tocAside) {
+      const links = tocAside.querySelectorAll('.toc-link');
+      links.forEach(link => {
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        if (!targetSection) return;
+
+        ScrollTrigger.create({
+          trigger: targetSection,
+          start: 'top 30%',
+          end: 'bottom 30%',
+          onToggle: (self) => {
+            if (self.isActive) {
+              links.forEach(l => l.classList.toggle('active', l === link));
+            }
+          }
+        });
+
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.lenis.scrollTo(targetSection, { offset: -80, duration: 1.2 });
+        });
+      });
+    }
+
+    // 6. Interactive Horizontal Timeline dot clicking
+    const timelineWrapper = document.getElementById('prototype-timeline');
+    if (timelineWrapper) {
+      const dots = timelineWrapper.querySelectorAll('.timeline-dot');
+      const cards = timelineWrapper.querySelectorAll('.timeline-node-card');
+      const progressLine = document.getElementById('timeline-progress-indicator');
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          const step = dot.getAttribute('data-step');
+          
+          dots.forEach(d => d.classList.toggle('active', d === dot));
+          
+          cards.forEach(c => {
+            const isActive = c.getAttribute('id') === `timeline-step-${step}`;
+            c.classList.toggle('active', isActive);
+            if (isActive) {
+              gsap.fromTo(c, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+            }
+          });
+
+          if (progressLine && dots.length > 1) {
+            const percent = (index / (dots.length - 1)) * 100;
+            gsap.to(progressLine, { width: `${percent}%`, duration: 0.3, ease: 'power2.out' });
+          }
+        });
+      });
+    }
+
+    // 7. Accordion custom GSAP slide transitions for FAQs
+    const detailsTags = document.querySelectorAll('.faq-item');
+    detailsTags.forEach(details => {
+      const summary = details.querySelector('summary');
+      const content = details.querySelector('.faq-content');
+      const inner = details.querySelector('.faq-content-inner');
+
+      if (!summary || !content || !inner) return;
+
+      let isAnimating = false;
+      summary.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (isAnimating) return;
+        isAnimating = true;
+
+        if (!details.open) {
+          details.open = true;
+          gsap.fromTo(content, 
+            { height: 0, opacity: 0 },
+            { 
+              height: inner.offsetHeight, 
+              opacity: 1, 
+              duration: 0.4, 
+              ease: 'power2.out',
+              onComplete: () => {
+                content.style.height = 'auto';
+                isAnimating = false;
+              }
+            }
+          );
+        } else {
+          gsap.fromTo(content, 
+            { height: content.offsetHeight, opacity: 1 },
+            { 
+              height: 0, 
+              opacity: 0, 
+              duration: 0.35, 
+              ease: 'power2.inOut',
+              onComplete: () => {
+                details.open = false;
+                isAnimating = false;
+              }
+            }
+          );
+        }
+      });
+    });
+
+    // 8. Stats counter rolling on scroll
+    const statsElements = document.querySelectorAll('.counter-number');
+    statsElements.forEach(el => {
+      const target = parseInt(el.getAttribute('data-target'), 10) || 0;
+      const counter = { value: 0 };
+      
+      gsap.to(counter, {
+        value: target,
+        duration: 1.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        },
+        onUpdate: () => {
+          el.textContent = Math.floor(counter.value);
+        },
+        onComplete: () => {
+          el.textContent = target;
+        }
+      });
+    });
+
+    // 9. Dynamic local reading progress bar
+    const localProgress = document.getElementById('local-progress-bar');
+    if (localProgress) {
+      gsap.to(localProgress, {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true
+        }
+      });
+    }
+
+    // Render dynamic credentials content and setup tables if present
+    this.renderDynamicContent();
+    this.setupProjectTable();
+  }
+
+  initCustomCursor() {
+    const cursorOuter = document.getElementById('cursor-outer');
+    const cursorInner = document.getElementById('cursor-inner');
+
+    if (cursorOuter && cursorInner && window.matchMedia('(pointer: fine)').matches) {
+      window.addEventListener('mousemove', (e) => {
+        gsap.to(cursorOuter, { x: e.clientX, y: e.clientY, duration: 0.15, ease: 'power2.out' });
+        gsap.to(cursorInner, { x: e.clientX, y: e.clientY, duration: 0.02 });
+      });
+
+      const bindHoverStates = () => {
+        const interactables = document.querySelectorAll('a, button, .timeline-dot, summary, .toc-link');
+        interactables.forEach(item => {
+          if (item.dataset.cursorBound) return;
+          item.dataset.cursorBound = 'true';
+
+          item.addEventListener('mouseenter', () => {
+            cursorOuter.classList.add('cursor-hover');
+            cursorInner.classList.add('cursor-hover');
+          });
+          item.addEventListener('mouseleave', () => {
+            cursorOuter.classList.remove('cursor-hover');
+            cursorInner.classList.remove('cursor-hover');
+          });
+        });
+      };
+
+      bindHoverStates();
+
+      // Hook renderComplete triggers to re-bind hover states on dynamic content
+      EventBus.on('ui:renderComplete', () => {
+        bindHoverStates();
+      });
+
+      // Quick timeouts to bind late-initialized elements
+      setTimeout(bindHoverStates, 1000);
+      setTimeout(bindHoverStates, 3000);
+    }
+  }
+
+  setupCapabilitiesPageAnimations() {
+    if (!this.sceneManager || !this.sceneManager.camera) return;
+
+    // Load capabilities models immediately
+    this.sceneManager.handleSectionTransition('capabilities');
+
+    // Fade out canvas in the software stack section
+    const canvas = document.getElementById('webgl-canvas');
+    const softwareSec = document.querySelector('.software-grid');
+    if (canvas && softwareSec) {
+      gsap.to(canvas, {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: softwareSec,
+          start: 'top bottom',
+          end: 'top center',
+          scrub: true
+        }
+      });
+    }
   }
 }
 

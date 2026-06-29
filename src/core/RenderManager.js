@@ -88,7 +88,60 @@ class RenderManager {
     });
 
     if (this.renderer && this.scene && this.camera) {
-      this.renderer.render(this.scene, this.camera);
+      const placeholders = document.querySelectorAll('.webgl-placeholder');
+
+      if (placeholders.length > 0) {
+        // Scissor rendering for Capabilities page placeholders
+        this.renderer.autoClear = false;
+        this.renderer.setClearColor(0x030c1e, 0); // Transparent background
+        this.renderer.clear();
+
+        placeholders.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          const width = rect.right - rect.left;
+          const height = rect.bottom - rect.top;
+
+          // Skip rendering if offscreen to save GPU cycles
+          if (rect.bottom < 0 || rect.top > window.innerHeight || rect.right < 0 || rect.left > window.innerWidth) {
+            return;
+          }
+
+          const left = rect.left;
+          const bottom = this.renderer.domElement.clientHeight - rect.bottom;
+
+          this.renderer.setViewport(left, bottom, width, height);
+          this.renderer.setScissor(left, bottom, width, height);
+          this.renderer.setScissorTest(true);
+
+          // Update camera aspect ratio for this scissor box
+          this.camera.aspect = width / height;
+          this.camera.updateProjectionMatrix();
+
+          // Set camera position right in front of the target model
+          const sceneType = el.getAttribute('data-scene');
+          let modelX = -90;
+          if (sceneType === 'process') modelX = -90;
+          else if (sceneType === 'pipeline') modelX = -30;
+          else if (sceneType === 'electrical') modelX = 30;
+          else if (sceneType === 'digital') modelX = 90;
+
+          this.camera.position.x = modelX;
+          this.camera.position.y = 0;
+          this.camera.position.z = 25;
+
+          // Render this scissor region
+          this.renderer.render(this.scene, this.camera);
+        });
+
+        this.renderer.setScissorTest(false);
+      } else {
+        // Standard fullscreen rendering (homepage, etc.)
+        this.renderer.autoClear = true;
+        this.renderer.setViewport(0, 0, this.renderer.domElement.clientWidth, this.renderer.domElement.clientHeight);
+        this.renderer.setScissor(0, 0, this.renderer.domElement.clientWidth, this.renderer.domElement.clientHeight);
+        this.renderer.setScissorTest(false);
+        this.renderer.render(this.scene, this.camera);
+      }
     }
   }
 }

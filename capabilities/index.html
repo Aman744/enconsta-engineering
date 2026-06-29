@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Capabilities | Enconsta Consulting</title>
+  <meta name="description"
+    content="Explore Enconsta's high-fidelity process modeling, mechanical validation, civil structural systems, piping corridor stress analysis, and technical software ecosystems.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="../src/style.css">
+  <script type="module" src="../src/main.js"></script>
+</head>
+
+<body class="bg-dark text-light typography-outfit">
+  <!-- Fixed WebGL Background Canvas -->
+  <canvas id="webgl-canvas" class="webgl-canvas"></canvas>
+
+  <div class="blueprint-overlay"></div>
+  <div class="custom-cursor-outer" id="cursor-outer"></div>
+  <div class="custom-cursor-inner" id="cursor-inner"></div>
+
+  <header class="header"></header>
+
+  <!-- Hero introduction section -->
+  <section class="services-hero-subpage" style="background-image: linear-gradient(rgba(3, 12, 30, 0.85), rgba(3, 12, 30, 0.98)), url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80');">
+    <div class="container hero-subpage-container">
+      <div class="hero-subpage-content" style="text-align: left;">
+        <span class="ticker-label">TECHNICAL COMPETENCE</span>
+        <h1 class="hero-subpage-title">Multidisciplinary Engineering Capabilities</h1>
+        <p class="hero-subhead" style="margin-top: 20px; max-width: 750px;">
+          Enconsta combines advanced software suites, field-proven methodologies, and expert verification audits to design high-performance systems for global energy and industrial plants.
+        </p>
+      </div>
+    </div>
+    <!-- Local Reading Progress Bar -->
+    <div class="reading-progress-container">
+      <div class="reading-progress-bar" id="local-progress-bar"></div>
+    </div>
+  </section>
+
+  <!-- Vertical 3D capabilities panels -->
+  <main style="position: relative; z-index: 2;">
+    <div class="capabilities-vertical-wrapper">
+      
+      <!-- Panel 1: Process & Mechanical Design -->
+      <div class="capability-vertical-panel" id="cap-process">
+        <div class="container grid-2" style="align-items: center; min-height: 80vh; padding: 60px 0;">
+          <div class="panel-content" style="text-align: left;">
+            <span class="section-pre text-cyan">01 / PROCESS & MECHANICAL</span>
+            <h2 class="panel-title" style="color: #FFFFFF; font-size: 2rem; margin: 15px 0;">Process & Mechanical Design</h2>
+            <p class="panel-desc" style="opacity: 0.85; line-height: 1.6; margin-bottom: 30px;">
+              High-fidelity simulation, thermal design, and technical safety audits for heavy process industries.
+            </p>
+            <div class="panel-details">
+              <div class="cap-group" style="margin-bottom: 20px;">
+                <h5 style="color: var(--color-accent); font-size: 1rem; margin-bottom: 5px;">Process Modeling</h5>
+                <p style="opacity: 0.8; font-size: 0.95rem;">Process simulation, P&ID drafting, steady-state hydraulics, and terminal designs.</p>
+              </div>
+              <div class="cap-group">
+                <h5 style="color: var(--color-accent); font-size: 1rem; margin-bottom: 5px;">Mechanical Validation</h5>
+                <p style="opacity: 0.8; font-size: 0.95rem;">Static calculations (PV Elite), rotating machinery sizing, and FAT witness support.</p>
+              </div>
+            </div>
+          </div>
+          <div class="panel-visual" style="min-height: 320px; display: flex; align-items: center; justify-content: center;">
+            <div class="webgl-placeholder" data-scene="process" style="width: 100%; max-width: 420px; height: 300px; position: relative;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: Civil & Piping Systems -->
+      <div class="capability-vertical-panel" id="cap-piping">
+        <div class="container grid-2" style="align-items: center; min-height: 80vh; padding: 60px 0;">
+          <div class="panel-content" style="text-align: left;">
+            <span class="section-pre text-cyan">02 / INFRASTRUCTURE</span>
+            <h2 class="panel-title" style="color: #FFFFFF; font-size: 2rem; margin: 15px 0;">Civil & Piping Systems</h2>
+            <p class="panel-desc" style="opacity: 0.85; line-height: 1.6; margin-bottom: 30px;">
+              Detailed structural calculations, dynamic foundation design, and 3D piping routing.
+            </p>
+            <div class="panel-details">
+              <div class="cap-group" style="margin-bottom: 20px;">
+                <h5 style="color: var(--color-accent); font-size: 1rem; margin-bottom: 5px;">Civil & Structural</h5>
+                <p style="opacity: 0.8; font-size: 0.95rem;">Pipe racks, dynamic steel supports, composite layouts, and STAAD-Pro validations.</p>
+              </div>
+              <div class="cap-group">
+                <h5 style="color: var(--color-accent); font-size: 1rem; margin-bottom: 5px;">Piping Engineering</h5>
+                <p style="opacity: 0.8; font-size: 0.95rem;">3D modeling (PDMS, E3D), Caesar II stress checks, and isometric extractions.</p>
+              </div>
+            </div>
+          </div>
+          <div class="panel-visual" style="min-height: 320px; display: flex; align-items: center; justify-content: center;">
+            <div class="webgl-placeholder" data-scene="pipeline" style="width: 100%; max-width: 420px; height: 300px; position: relative;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: Electrical & Instrumentation -->
+      <div class="capability-vertical-panel" id="cap-systems">
+        <div class="container grid-2" style="align-items: center; min-height: 80vh; padding: 60px 0;">
+          <div class="panel-content" style="text-align: left;">
+            <span class="section-pre text-cyan">03 / ELECTRICAL & E&I</span>
+            <h2 class="panel-title" style="color: #FFFFFF; font-size: 2rem; margin: 15px 0;">Electrical & Instrumentation</h2>
+            <p class="panel-desc" style="opacity: 0.85; line-height: 1.6; margin-bottom: 30px;">
+              Sizing grid lines, designing controls architectures, and telecom setups.
+            </p>
+            <div class="panel-details">
+              <div class="cap-group" style="margin-bottom: 20px;">
+                <h5 style="color: var(--color-accent); font-size: 1rem; margin-bottom: 5px;">Electrical Grid Sizing</h5>
+                <p style="opacity: 0.8; font-size: 0.95rem;">ETAP load analysis, cable sizing, earthing grids, and hazardous classifications.</p>
+              </div>
+              <div class="cap-group">
+                <h5 style="color: var(--color-accent); font-size: 1rem; margin-bottom: 5px;">Instrumentation & F&G</h5>
+                <p style="opacity: 0.8; font-size: 0.95rem;">DCS/PLC architectures, SCADA automation loops, and fire & gas telemetry.</p>
+              </div>
+            </div>
+          </div>
+          <div class="panel-visual" style="min-height: 320px; display: flex; align-items: center; justify-content: center;">
+            <div class="webgl-placeholder" data-scene="electrical" style="width: 100%; max-width: 420px; height: 300px; position: relative;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 4: AI & Software Platforms -->
+      <div class="capability-vertical-panel" id="cap-digital">
+        <div class="container grid-2" style="align-items: center; min-height: 80vh; padding: 60px 0;">
+          <div class="panel-content" style="text-align: left;">
+            <span class="section-pre text-cyan">04 / DIGITAL INTELLIGENCE</span>
+            <h2 class="panel-title" style="color: #FFFFFF; font-size: 2rem; margin: 15px 0;">AI & Software Platforms</h2>
+            <p class="panel-desc" style="opacity: 0.85; line-height: 1.6; margin-bottom: 30px;">
+              AI-driven document checking, smart design audits, and reliability modeling.
+            </p>
+            <div class="panel-details">
+              <div class="cap-group" style="margin-bottom: 20px;">
+                <h5 style="color: var(--color-accent); font-size: 1rem; margin-bottom: 5px;">AI Design Command</h5>
+                <p style="opacity: 0.8; font-size: 0.95rem;">Automated P&ID checks, doc generation, and safety criticality analytics.</p>
+              </div>
+              <div class="cap-group">
+                <h5 style="color: var(--color-accent); font-size: 1rem; margin-bottom: 5px;">Engineering Software Stack</h5>
+                <p style="opacity: 0.8; font-size: 0.95rem;">Unisim, Olga, Pipenet, PDS, E3D, Caesar II, and PV Elite integrations.</p>
+              </div>
+            </div>
+          </div>
+          <div class="panel-visual" style="min-height: 320px; display: flex; align-items: center; justify-content: center;">
+            <div class="webgl-placeholder" data-scene="digital" style="width: 100%; max-width: 420px; height: 300px; position: relative;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Software Ecosystem -->
+    <div class="container" style="padding: 80px 0;">
+      <div
+        style="background: rgba(0, 180, 216, 0.02); border: 1px dashed rgba(0, 180, 216, 0.15); padding: 40px; border-radius: 12px; margin-bottom: 60px;">
+        <div class="text-center" style="margin-bottom: 40px;">
+          <span class="section-pre text-cyan">05 / TECHNICAL COMPETENCE</span>
+          <h2 style="color: #FFFFFF; font-size: 2rem; margin-top: 10px;">Our Software & Tool Ecosystem</h2>
+          <p style="opacity: 0.7; max-width: 600px; margin: 15px auto 0 auto; font-size: 0.95rem;">
+            We utilize industry-standard specialized software tools across all engineering disciplines to guarantee precision, safety compliance, and global delivery.
+          </p>
+        </div>
+
+        <div class="software-grid"
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+          <div class="software-col"
+            style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+            <h5 style="color: var(--color-accent); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 15px;">
+              PROCESS SIMULATION</h5>
+            <div class="software-badges">
+              <span>Hysis</span><span>Olga</span><span>Unisim</span><span>Pipenet</span><span>Flare Sim</span><span>HTRI</span><span>Flarenet</span><span>Pipesim</span>
+            </div>
+          </div>
+          
+          <div class="software-col"
+            style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+            <h5 style="color: var(--color-accent); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 15px;">
+              PROCESS & PIPING 3D</h5>
+            <div class="software-badges">
+              <span>Caesar II</span><span>PDMS</span><span>E3D</span><span>PDS</span><span>SP3D</span><span>Plant 3D</span><span>AutoCAD</span><span>MicroStation</span>
+            </div>
+          </div>
+          
+          <div class="software-col"
+            style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+            <h5 style="color: var(--color-accent); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 15px;">
+              MECHANICAL</h5>
+            <div class="software-badges">
+              <span>PV Elite</span><span>Ansys FEA</span><span>AME Tank</span><span>HAP</span>
+            </div>
+          </div>
+          
+          <div class="software-col"
+            style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+            <h5 style="color: var(--color-accent); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 15px;">
+              CIVIL & STRUCTURAL</h5>
+            <div class="software-badges">
+              <span>STAAD Pro</span><span>GT STRUDL</span><span>Tekla</span><span>Revit</span><span>SACS</span><span>MAT 3D</span><span>FDN3D</span><span>GRL WEAP</span>
+            </div>
+          </div>
+          
+          <div class="software-col"
+            style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+            <h5 style="color: var(--color-accent); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 15px;">
+              ELECTRICAL & INSTRUMENTATION</h5>
+            <div class="software-badges">
+              <span>ETAP</span><span>EDSA</span><span>Digsilent</span><span>SPEL</span><span>SPI (InTools)</span><span>SPPID</span>
+            </div>
+          </div>
+          
+          <div class="software-col"
+            style="background: rgba(255,255,255,0.02); padding: 25px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+            <h5 style="color: var(--color-accent); font-family: var(--font-mono); font-size: 0.85rem; margin-bottom: 15px;">
+              HSE & CONTROLS</h5>
+            <div class="software-badges">
+              <span>PHA Pro</span><span>PHASST</span><span>Flaresim</span><span>Primavera P6</span><span>MS Project</span><span>Navisworks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA to contact -->
+      <div class="service-card-cta-nav" style="margin-top: 40px;">
+        <h3>Need High-End Verification or Design Support?</h3>
+        <p>Inquire with our technical specialists to scope your requirements and review software integration pipelines.</p>
+        <a href="../contact/" class="btn btn-primary">Submit Engineering Request</a>
+      </div>
+    </div>
+  </main>
+
+  <footer></footer>
+</body>
+
+</html>
