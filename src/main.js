@@ -295,56 +295,7 @@ class App {
       }
     });
 
-    // 2. Capabilities Horizontal Scroll pinning
-    const pinWrapper = document.getElementById('capabilities-pin');
-    if (pinWrapper) {
-      const panels = gsap.utils.toArray('.panel');
-      const pin = gsap.to('.horizontal-scroll-container', {
-        xPercent: -75, // Translate through 4 panels (each 100vw, so xPercent is -75)
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#capabilities-pin',
-          pin: true,
-          start: 'top top',
-          end: '+=300%',
-          scrub: 1,
-          onUpdate: (self) => {
-            // Travel camera dynamically through X positions based on horizontal scroll progress
-            // Offset the camera position depending on viewport layout to prevent overlapping HTML text
-            if (this.sceneManager && this.sceneManager.camera) {
-              const isDesktop = window.innerWidth > 1024;
-              const xOffset = isDesktop ? -12 : 0;
-              const yOffset = isDesktop ? 0 : 8; // Shift camera up on mobile to push model to the bottom half
 
-              const camX = gsap.utils.interpolate(-90, 90, self.progress) + xOffset;
-
-              this.sceneManager.camera.position.x = camX;
-              this.sceneManager.camera.position.y = yOffset;
-            }
-          },
-          onLeave: () => {
-            if (this.sceneManager && this.sceneManager.camera) {
-              gsap.to(this.sceneManager.camera.position, {
-                x: 0,
-                y: 0,
-                duration: 0.8,
-                overwrite: 'auto'
-              });
-            }
-          },
-          onLeaveBack: () => {
-            if (this.sceneManager && this.sceneManager.camera) {
-              gsap.to(this.sceneManager.camera.position, {
-                x: 0,
-                y: 0,
-                duration: 0.8,
-                overwrite: 'auto'
-              });
-            }
-          }
-        }
-      });
-    }
 
     // 3. Setup dynamic step highlighting in AI Digital Twin section
     const twinSteps = document.querySelectorAll('.twin-step');
